@@ -3,10 +3,34 @@
 
 #include "task.hpp"
 
+/*****************************************************************
+  IntVecSortTask class, extends Task
+  Methods:
+    reusealloc()/reusefree() replace new/delete (reuse tasks)
+    randomize(s) fills the array with s random elements
+    result() gets the resulting array after solve() or merge()
+ *****************************************************************/
+
 class IntVecSortTask : public Task {
 
 private:
 	std::vector<int> _data;
+	static std::vector<IntVecSortTask*> _free_list;
+
+	// this does not work with multiple threads!
+	IntVecSortTask* reusealloc() {
+		if (_free_list.empty())
+			return new IntVecSortTask();
+		IntVecSortTask* p = _free_list.back();
+		_free_list.pop_back();
+		p->_data.clear();
+		return p;
+        }
+
+        // this does not work with multiple threads!
+        void reusefree(IntVecSortTask* p) {
+        	_free_list.push_back(p);
+        }
 
 public:
 	IntVecSortTask() {}
@@ -27,49 +51,59 @@ public:
 
 	// Task interface implementation: split, merge, solve, write
 
-	int split(Task** partitions, int max) override {
-		if (_data.size() < 3 || max < 3) return 0;
-		IntVecSortTask* leftt = new IntVecSortTask();
-		IntVecSortTask* rightt = new IntVecSortTask();
+	int split(TaskCollection* coll) override {
+		if (_data.size() < 3) return 0;
+//		IntVecSortTask* leftt = new IntVecSortTask();
+//		IntVecSortTask* rightt = new IntVecSortTask();
+		IntVecSortTask* leftt = reusealloc();
+		IntVecSortTask* rightt = reusealloc();
 		std::vector<int>& left = leftt->_data;
 		std::vector<int>& right = rightt->_data;
 		int pivot = _data[0];
 		for (int i=1; i<_data.size(); i++) {
-			if (_data[i] < pivot)
+			if (_data[i] < pivot) // could be <=
 				left.push_back(_data[i]);
 			else
 				right.push_back(_data[i]);
 		}
-		if (right.size())
-			left.push_back(pivot);
-		else
-			right.push_back(pivot);
-		partitions[0] = leftt;
-		partitions[1] = rightt;
+		left.push_back(pivot); // could be right
+		coll->push(rightt);
+		coll->push(leftt); // will pop left first
 		return 2;
 	}
 
-	void merge(Task** p, int max) override {
+	void merge(TaskCollection* coll) override {
 		_data.clear();
-		for (int i=0; i<max; i++) {
-			IntVecSortTask *t = (IntVecSortTask *) p[i];
-			if (t) {
-				p[i] = nullptr;
-				for (int v : t->_data)
-					_data.push_back(v);
-				delete t;
-			}
+		while (coll->size()) {
+			IntVecSortTask *t = (IntVecSortTask *) coll->pop();
+			for (int v : t->_data)
+				_data.push_back(v);
+//			delete t;
+			reusefree(t);
 		}
 	}
 
 	void solve() override {
+		if (_data.size() < 2) return;
 		std::sort(_data.begin(), _data.end());
 	}
 
 	void write(std::ostream& os) const override {
-		for (int i=0; i<_data.size(); i++) {
-			if (i) os << ' ';
-			os << _data[i];
+		os << '{';
+		int size = _data.size();
+		if (size)
+			os << _data[0];
+		int tail = 1;
+		if (size >= 10) {
+			for (int i=1; i<5; i++)
+				os << ' ' << _data[i];
+			os << " ...";
+			tail = size - 5;
 		}
+		for (int i=tail; i<size; i++)
+			os << ' ' << _data[i];
+		os << '}';
 	}
 };
+
+std::vector<IntVecSortTask*> IntVecSortTask::_free_list;

@@ -1,6 +1,9 @@
 #include <iostream>
 #include "tspgraph.hpp"
 
+/*****************************************************************
+  Example program to load and print a TSP graph
+ *****************************************************************/
 
 int main(int argc, char** argv) {
 	if (argc < 2) {
