@@ -1,6 +1,6 @@
 CPPFLAGS=-O3
 #CPPFLAGS=-g
-#CPPFLAGS=-std=c++20
+CPPFLAGS=-std=c++20
 
 TARGETS=tsp tspprint intvecsort
 
