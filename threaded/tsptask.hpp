@@ -159,7 +159,7 @@ public:
 	}
 
 	void solve() override {
-		std::cout << "solving " << _path << "\n";
+	std::cout << "solving " << _path << "\n";
 		if (_path.size() == TSPPath::full()) {
 			_path.push(TSPPath::FIRST_NODE); // last node = first node
 			if (_path.distance() < _shortest.distance())
