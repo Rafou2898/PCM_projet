@@ -1,45 +1,49 @@
+#pragma once
 #include "task.hpp"
 #include <thread>
 #include <mutex>
 #include <vector>
 #include <atomic>
 
+
 using namespace std;
 
 class MutexTaskRunner : public TaskRunner
 {
 private:
-    std::mutex global_mutex;
-    std::vector<Task *> work_queue;
-    std::atomic<bool> finished;
+    mutex global_mutex;
+    vector<Task *> work_queue;
+    atomic<bool> finished;
+    atomic<uint64_t> active_tasks;
     int nb_threads;
-    int tree_size;
 
 public:
-    MutexTaskRunner(int n, int number_cities) : nb_threads(n), finished(false)
-    {
-        tree_size = factorial(number_cities - 1);
-    }
+    MutexTaskRunner(int n, int number_cities) : nb_threads(n), finished(false), active_tasks(0)
+    {}
 
     void run(Task *root) override
     {
-        // 1. initialiser la queue avec la tâche root
         {
-            std::lock_guard<std::mutex> lock(global_mutex);
+            lock_guard<mutex> lock(global_mutex);
             work_queue.push_back(root);
         }
-
+		active_tasks.store(1);
         startTimer();
 
-        // 2. créer threads
-        std::vector<std::thread> workers;
+        vector<thread> workers;
+		workers.reserve(nb_threads);
         for (int i = 0; i < nb_threads; i++)
+        {
+
             workers.emplace_back([this]()
                                  { worker_loop(); });
+        }
 
-        // 3. attendre fin des threads
         for (auto &t : workers)
+        {
+
             t.join();
+        }
 
         stopTimer();
     }
@@ -47,13 +51,17 @@ public:
 private:
     void worker_loop()
     {
-        while (!finished)
+        while (!finished.load(std::memory_order_relaxed))
         {
             Task *t = nullptr;
 
-            // extraire une tâche
+            // We extract a task from the global work queue
+            // It is a critical section
+            // So we use a mutex to protect it
+            // lock_guard is unlocked when going out of scope
+            // thats why we put it in a separate block
             {
-                std::lock_guard<std::mutex> lock(global_mutex);
+                lock_guard<mutex> lock(global_mutex);
                 if (!work_queue.empty())
                 {
                     t = work_queue.back();
@@ -63,34 +71,44 @@ private:
 
             if (t == nullptr)
             {
-                std::this_thread::yield();
+                // We check if we are finished
+                if (active_tasks.load(std::memory_order_relaxed) == 0)
+                {
+                    finished.store(true, std::memory_order_relaxed);
+                    return;
+                }
+
+                this_thread::yield();
                 continue;
             }
 
-            TaskStack coll(32);
+            TaskStack coll(64);
             int n = t->split(&coll);
+			//cout << "split created n:" << n << endl;
 
             if (n == 0)
             {
                 t->solve();
-                // détecter la terminaison : à définir
 
+                // One less leaf
+                uint64_t r = active_tasks.fetch_sub(1, std::memory_order_relaxed);
+
+                if (r == 1)
+                {
+                    finished.store(true, std::memory_order_relaxed);
+                }
             }
             else
             {
-                // insérer les sous‐tâches dans la file
-                std::lock_guard<std::mutex> lock(global_mutex);
-                for (int i = 0; i < n; i++)
-                    work_queue.push_back(coll[i]);
+                {
+                    lock_guard<mutex> lock(global_mutex);
+                    for (int i = 0; i < n; i++)
+                        work_queue.push_back(coll[i]);
+                }
+				 active_tasks.fetch_add(n - 1);
+				 //cout << "active tasks: " << active_tasks.load() << endl;
                 t->merge(&coll);
             }
         }
-    }
-
-    unsigned int factorial(unsigned int n)
-    {
-        if (n == 0)
-            return 1;
-        return n * factorial(n - 1);
     }
 };

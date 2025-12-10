@@ -1,5 +1,9 @@
+#pragma once
 #include <iostream>
 #include <chrono>
+#include <thread>
+#include <mutex>
+#include <atomic>
 
 /*****************************************************************
   Task class

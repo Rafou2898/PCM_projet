@@ -1,6 +1,6 @@
 #include <iostream>
 #include "tsptask.hpp"
-
+#include "mutex_runner.hpp"
 /*****************************************************************
   Program to solve a TSP problem
   Arguments: tsp <filename> [number]
@@ -31,10 +31,13 @@ int main(int argc, char** argv) {
 
 	TSPTask tsp1;
 	tsp1.cutoff(0);
-	PartitionedTaskStackRunner r1(TSPPath::MAX_GRAPH);
+	MutexTaskRunner r1(std::thread::hardware_concurrency(), TSPPath::MAX_GRAPH);
+	r1.run(&tsp1);
+	std::cout << "mutex: " << tsp1.result() << " t:" << r1.duration() << std::endl;
+	/* PartitionedTaskStackRunner r1(TSPPath::MAX_GRAPH);
 	r1.run(&tsp1);
 	std::cout << "partit: " << tsp1.result() << " t:" << r1.duration()
-		  << " s:" << r1.solves() << "/" << r1.splits() << std::endl;
+		  << " s:" << r1.solves() << "/" << r1.splits() << std::endl; */
 
 	return 0;
 }
