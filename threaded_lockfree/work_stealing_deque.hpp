@@ -10,7 +10,6 @@ class WorkStealingDeque
 private:
     struct CircularBuffer
     {
-        // We need a capacity
         int capacity;
 
         vector<atomic<T *>> buffer;
@@ -24,21 +23,21 @@ private:
             }
         }
 
-        T *get(int index)
+        T *get(uint64_t index)
         {
             return buffer.at(index % capacity).load(memory_order_acquire);
         }
-        void put(int index, T *value)
+        void put(uint64_t index, T *value)
         {
             buffer.at(index % capacity).store(value, memory_order_release);
         }
 
-        CircularBuffer *resize(int bottom, int top)
+        CircularBuffer *resize(uint64_t bottom, uint64_t top)
         {
             // Like vector, we double the capacity
             CircularBuffer *new_buffer = new CircularBuffer(capacity * 2);
             // Top is the older index, the oldest pushed element where bottom is the newest pushed element so top < bottom
-            for (int i = top; i < bottom; i++)
+            for (uint64_t i = top; i < bottom; i++)
             {
                 T *value = get(i);
                 new_buffer->put(i, value);
@@ -54,7 +53,7 @@ private:
     // Bottom of stack for thread owner
     atomic<uint64_t> _bottom; // Extrémité pour le propriétaire (push/pop)
     // Mains data array
-    atomic<CircularBuffer<T> *> _array; // Tableau circulaire
+    atomic<CircularBuffer *> _array; // Tableau circulaire
 
 public:
     WorkStealingDeque(int initial_capacity = 1024)
@@ -95,8 +94,11 @@ public:
     {
         // bottom is always one past the last element so we decrement it first
         uint64_t bottom = _bottom.load(memory_order_acquire) - 1;
+
         CircularBuffer *array = _array.load(memory_order_acquire);
         _bottom.store(bottom, memory_order_release);
+
+        // the fence ensures that we see the latest value of top
         atomic_thread_fence(memory_order_seq_cst);
         uint64_t top = _top.load(memory_order_relaxed);
 
@@ -129,8 +131,11 @@ public:
     T *steal()
     {
         uint64_t top = _top.load(memory_order_acquire);
+
+        // the fence ensures that we see the latest value of bottom
         atomic_thread_fence(memory_order_seq_cst);
         uint64_t bottom = _bottom.load(memory_order_acquire);
+
         T *item = nullptr;
         if (top < bottom)
         {
@@ -152,7 +157,9 @@ public:
     {
         uint64_t bottom = _bottom.load(memory_order_acquire);
         uint64_t top = _top.load(memory_order_acquire);
-        return max(0, bottom - top);
+
+        // We have to cast to uint64_t because the 0 is considered as an int and max() between uint64_t and int is not defined
+        return max((uint64_t)0, bottom - top);
     }
 
     bool empty() const

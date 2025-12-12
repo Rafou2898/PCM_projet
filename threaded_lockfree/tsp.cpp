@@ -1,6 +1,7 @@
 #include <iostream>
 #include "tsptask.hpp"
 #include "mutex_runner.hpp"
+#include "work_stealing_runner.hpp"
 /*****************************************************************
   Program to solve a TSP problem
   Arguments: tsp <filename> [number]
@@ -24,20 +25,22 @@ int main(int argc, char** argv) {
 
 	TSPPath::setup(&graph);
 
-	TSPTask tsp2;
-	DirectTaskRunner r2;
-	r2.run(&tsp2);
-	std::cout << "direct: " << tsp2.result() << " t:" << r2.duration() << std::endl;
-
 	TSPTask tsp1;
-	tsp1.cutoff(0);
-	MutexTaskRunner r1(std::thread::hardware_concurrency(), TSPPath::MAX_GRAPH);
+	DirectTaskRunner r1;
 	r1.run(&tsp1);
-	std::cout << "mutex: " << tsp1.result() << " t:" << r1.duration() << std::endl;
-	/* PartitionedTaskStackRunner r1(TSPPath::MAX_GRAPH);
-	r1.run(&tsp1);
-	std::cout << "partit: " << tsp1.result() << " t:" << r1.duration()
-		  << " s:" << r1.solves() << "/" << r1.splits() << std::endl; */
+	std::cout << "direct: " << tsp1.result() << " t:" << r1.duration() << std::endl;
 
+	TSPTask tsp2;
+	tsp2.cutoff(0);
+	MutexTaskRunner r2(std::thread::hardware_concurrency(), TSPPath::MAX_GRAPH);
+	r2.run(&tsp2);
+	std::cout << "mutex: " << tsp2.result() << " t:" << r2.duration() << std::endl;
+	
+	TSPTask tsp3;
+	tsp3.cutoff(0);
+	WorkStealingRunner r3(std::thread::hardware_concurrency(), TSPPath::MAX_GRAPH);
+	r3.run(&tsp3);
+	std::cout << "worksteal: " << tsp3.result() << " t:" << r3.duration() << std::endl;
+	
 	return 0;
 }
