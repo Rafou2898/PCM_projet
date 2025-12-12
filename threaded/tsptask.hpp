@@ -136,25 +136,23 @@ private:
 	void update_shortest(TSPPath& new_path) {
 		int new_dist = new_path.distance();
 		
-		// Boucle CAS classique
 		TSPPath* current = _shortest.load(std::memory_order_acquire);
 		
 		while (new_dist < current->distance()) {
 			TSPPath* new_shortest = new TSPPath(new_path);
 			
-			// Tentative de CAS
+			// we try a CAS to update _shortest
 			if (_shortest.compare_exchange_weak(current, new_shortest, 
 			                                     std::memory_order_release,
 			                                     std::memory_order_acquire)) {
-				//  Succès : on a mis à jour _shortest
-				// On ne peut PAS libérer l'ancien car d'autres threads peuvent encore le lire
-				// (On accepte ce petit memory leak pour la simplicité)
+				//  we succeeded
+				// We cannot free the old one because other threads might still read it
 				break;
 			} else {
-				// Échec : un autre thread a modifié _shortest
-				// current contient maintenant la nouvelle valeur
+				// but if we failed it means another thread modified _shortest
+				// current now contains the new value
 				delete new_shortest;
-				// On reboucle pour vérifier si on est toujours meilleur
+				// We loop again to check if we are still better
 			}
 		}
 	}

@@ -10,35 +10,40 @@
   Should call (static) TSPPath::setup() using a TSPGraph before
   creating TSPPath objects.
   Methods:
-    maximise() sets the distance of path to maximum possible
-    size() gets the number of nodes in path
-    full() gets the size of a path with all nodes (== graph size)
-    distance() gets the distance of the path
-    contains(i) determines if path contains the node i
-    tail() gets node in path tail
-    push(node) adds node (and respective distance) to path tail
-    pop() drops node ad path tail
+	maximise() sets the distance of path to maximum possible
+	size() gets the number of nodes in path
+	full() gets the size of a path with all nodes (== graph size)
+	distance() gets the distance of the path
+	contains(i) determines if path contains the node i
+	tail() gets node in path tail
+	push(node) adds node (and respective distance) to path tail
+	pop() drops node ad path tail
  *****************************************************************/
 
-class TSPPath {
+class TSPPath
+{
 public:
 	static const int FIRST_NODE = 0;
 	static const int MAX_GRAPH = 32;
+
 private:
-	static TSPGraph* _graph;
+	static TSPGraph *_graph;
 	int _node[MAX_GRAPH];
 	int _size;
 	int _distance;
 	std::bitset<MAX_GRAPH> _contents;
+
 public:
-	static void setup(TSPGraph *graph) {
+	static void setup(TSPGraph *graph)
+	{
 		_graph = graph;
 		if (_graph->size() > MAX_GRAPH)
 			throw std::runtime_error("Graph bigger than MAX_GRAPH");
 	}
 	static int full() { return _graph->size(); } // the size of a full path
 
-	TSPPath() {
+	TSPPath()
+	{
 		_node[0] = FIRST_NODE;
 		_size = 1;
 		_distance = 0;
@@ -50,38 +55,44 @@ public:
 	int size() { return _size; }
 	int distance() { return _distance; }
 	bool contains(int i) { return _contents.test(i); }
-	int tail() { return _node[_size-1]; }
+	int tail() { return _node[_size - 1]; }
 
-	void push(int node) {
+	void push(int node)
+	{
 		if (node >= _graph->size())
 			throw std::runtime_error("Node outside graph.");
 		_distance += _graph->distance(tail(), node);
 		_contents.set(node);
-		_node[_size ++] = node;
+		_node[_size++] = node;
 	}
 
-	void pop() {
+	void pop()
+	{
 		if (_size < 2)
 			throw std::runtime_error("Empty path to pop().");
-		_size --;
+		_size--;
 		int oldtail = _node[_size];
-		int newtail = _node[_size-1];
+		int newtail = _node[_size - 1];
 		if (oldtail != FIRST_NODE)
 			_contents.reset(oldtail);
 		_distance -= _graph->distance(newtail, oldtail);
 	}
 
-	void write(std::ostream& os) const {
+	void write(std::ostream &os) const
+	{
 		os << "{" << _distance << ": ";
-		for (int i=0; i<_size; i++) {
-			if (i) os << ", ";
+		for (int i = 0; i < _size; i++)
+		{
+			if (i)
+				os << ", ";
 			os << _node[i];
 		}
 		os << "}";
 	}
 };
 
-std::ostream& operator<<(std::ostream& os, const TSPPath& t) {
+std::ostream &operator<<(std::ostream &os, const TSPPath &t)
+{
 	t.write(os);
 	return os;
 }
@@ -91,9 +102,9 @@ std::ostream& operator<<(std::ostream& os, const TSPPath& t) {
   Should call (static) TSPPath::setup() using a TSPGraph before
   creating TSPPath objects.
   Methods:
-    reusealloc()/reusefree() replace new/delete (reuse tasks)
-    cutoff(c) sets a cutoff size (from the end of a full path)
-    result() gets the result after solve() or merge()
+	reusealloc()/reusefree() replace new/delete (reuse tasks)
+	cutoff(c) sets a cutoff size (from the end of a full path)
+	result() gets the result after solve() or merge()
  *****************************************************************/
 class TSPTask : public Task
 {
@@ -133,32 +144,34 @@ private:
 		_path.push(node);
 	}
 
-	void update_shortest(TSPPath& new_path) {
+	void update_shortest(TSPPath &new_path)
+	{
 		int new_dist = new_path.distance();
-		
-		// Boucle CAS classique
-		TSPPath* current = _shortest.load(std::memory_order_acquire);
-		
-		while (new_dist < current->distance()) {
-			TSPPath* new_shortest = new TSPPath(new_path);
-			
-			// Tentative de CAS
-			if (_shortest.compare_exchange_weak(current, new_shortest, 
-			                                     std::memory_order_release,
-			                                     std::memory_order_acquire)) {
-				//  Succès : on a mis à jour _shortest
-				// On ne peut PAS libérer l'ancien car d'autres threads peuvent encore le lire
-				// (On accepte ce petit memory leak pour la simplicité)
+
+		TSPPath *current = _shortest.load(std::memory_order_acquire);
+
+		while (new_dist < current->distance())
+		{
+			TSPPath *new_shortest = new TSPPath(new_path);
+
+			// we try a CAS to update _shortest
+			if (_shortest.compare_exchange_weak(current, new_shortest,
+												std::memory_order_release,
+												std::memory_order_acquire))
+			{
+				//  we succeeded
+				// We cannot free the old one because other threads might still read it
 				break;
-			} else {
-				// Échec : un autre thread a modifié _shortest
-				// current contient maintenant la nouvelle valeur
+			}
+			else
+			{
+				// but if we failed it means another thread modified _shortest
+				// current now contains the new value
 				delete new_shortest;
-				// On reboucle pour vérifier si on est toujours meilleur
+				// We loop again to check if we are still better
 			}
 		}
 	}
-
 
 public:
 	TSPTask() { _cutoff_size = TSPPath::full(); }
@@ -170,29 +183,27 @@ public:
 	TSPPath &result() { return *(_shortest.load()); }
 
 	// Task interface implementation: split, merge, solve, write
-
 	int split(TaskCollection *collection) override
 	{
 		collection->clear();
 		if (_path.size() >= _cutoff_size)
 			return 0;
 
-
-		TSPPath* current_shortest = _shortest.load(std::memory_order_acquire);
+		TSPPath *current_shortest = _shortest.load(std::memory_order_acquire);
 		int current_bound = current_shortest->distance();
-		
+
 		// We prune if we are already over the current best, it was missing from the original code
 		if (_path.distance() >= current_bound)
 		{
 			return 0;
-		}	
-		
+		}
+
 		int count = 0;
 		for (int i = 0; i < TSPPath::full(); i++)
 		{
 			if (!_path.contains(i))
 			{
-				//TSPTask* t  = new TSPTask(this, i);
+				// TSPTask* t  = new TSPTask(this, i);
 				TSPTask *t = reusealloc(i);
 				collection->push(t);
 				count++;
@@ -226,7 +237,7 @@ public:
 		else
 		{
 
-			TSPPath* current_shortest = _shortest.load(std::memory_order_acquire);
+			TSPPath *current_shortest = _shortest.load(std::memory_order_acquire);
 			int current_bound = current_shortest->distance();
 
 			for (int i = 0; i < TSPPath::full(); i++)
@@ -234,7 +245,7 @@ public:
 				if (!_path.contains(i))
 				{
 					_path.push(i);
-					
+
 					if (_path.distance() < current_bound)
 						solve();
 					_path.pop();
@@ -261,5 +272,5 @@ TSPPath *initShortest()
 
 std::atomic<TSPPath *> TSPTask::_shortest{initShortest()};
 
-//std::vector<TSPTask *> TSPTask::_free_list;
+// std::vector<TSPTask *> TSPTask::_free_list;
 thread_local std::vector<TSPTask *> TSPTask::_free_list;

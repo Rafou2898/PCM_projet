@@ -35,6 +35,7 @@ private:
 
         CircularBuffer *resize(int bottom, int top)
         {
+            // Like vector, we double the capacity
             CircularBuffer *new_buffer = new CircularBuffer(capacity * 2);
             // Top is the older index, the oldest pushed element where bottom is the newest pushed element so top < bottom
             for (int i = top; i < bottom; i++)
