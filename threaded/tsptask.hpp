@@ -95,36 +95,70 @@ std::ostream& operator<<(std::ostream& os, const TSPPath& t) {
     cutoff(c) sets a cutoff size (from the end of a full path)
     result() gets the result after solve() or merge()
  *****************************************************************/
-
-class TSPTask : public Task {
+class TSPTask : public Task
+{
 
 private:
-	static TSPPath _shortest;
-	static std::vector<TSPTask*> _free_list;
+	/* static TSPPath _shortest;
+	static std::vector<TSPTask*> _free_list; */
+	static std::atomic<TSPPath *> _shortest;
+	static thread_local std::vector<TSPTask *> _free_list;
 
 	// this does not work with multiple threads!
-	TSPTask* reusealloc(int node) {
-		if (_free_list.empty())
+	TSPTask *reusealloc(int node)
+	{
+		/* if (_free_list.empty())
 			return new TSPTask(this, node);
-		TSPTask* p = _free_list.back();
+		TSPTask *p = _free_list.back();
 		_free_list.pop_back();
 		p->_path = _path;
 		p->_cutoff_size = _cutoff_size;
 		p->_path.push(node);
-		return p;
-        }
+		return p; */
+		return new TSPTask(this, node);
+	}
 
-        // this does not work with multiple threads!
-        void reusefree(TSPTask* p) {
-        	_free_list.push_back(p);
-        }
+	// this does not work with multiple threads!
+	void reusefree(TSPTask *p)
+	{
+		/* _free_list.push_back(p); */
+		delete p;
+	}
 
-        TSPPath _path;
-        int _cutoff_size;
+	TSPPath _path;
+	int _cutoff_size;
 
-	TSPTask(TSPTask* task, int node) : _path(task->_path), _cutoff_size(task->_cutoff_size) {
+	TSPTask(TSPTask *task, int node) : _path(task->_path), _cutoff_size(task->_cutoff_size)
+	{
 		_path.push(node);
 	}
+
+	void update_shortest(TSPPath& new_path) {
+		int new_dist = new_path.distance();
+		
+		// Boucle CAS classique
+		TSPPath* current = _shortest.load(std::memory_order_acquire);
+		
+		while (new_dist < current->distance()) {
+			TSPPath* new_shortest = new TSPPath(new_path);
+			
+			// Tentative de CAS
+			if (_shortest.compare_exchange_weak(current, new_shortest, 
+			                                     std::memory_order_release,
+			                                     std::memory_order_acquire)) {
+				//  Succès : on a mis à jour _shortest
+				// On ne peut PAS libérer l'ancien car d'autres threads peuvent encore le lire
+				// (On accepte ce petit memory leak pour la simplicité)
+				break;
+			} else {
+				// Échec : un autre thread a modifié _shortest
+				// current contient maintenant la nouvelle valeur
+				delete new_shortest;
+				// On reboucle pour vérifier si on est toujours meilleur
+			}
+		}
+	}
+
 
 public:
 	TSPTask() { _cutoff_size = TSPPath::full(); }
@@ -132,45 +166,76 @@ public:
 
 	// cutoff set, expressed as a distance from full path
 	void cutoff(int c) { _cutoff_size = TSPPath::full() - c; }
-	TSPPath& result() { return _shortest; }
+	// TSPPath& result() { return _shortest; }
+	TSPPath &result() { return *(_shortest.load()); }
 
 	// Task interface implementation: split, merge, solve, write
 
-	int split(TaskCollection* collection) override {
+	int split(TaskCollection *collection) override
+	{
 		collection->clear();
-		if (_path.size() >= _cutoff_size) return 0;
+		if (_path.size() >= _cutoff_size)
+			return 0;
+
+
+		TSPPath* current_shortest = _shortest.load(std::memory_order_acquire);
+		int current_bound = current_shortest->distance();
+		
+		// We prune if we are already over the current best, it was missing from the original code
+		if (_path.distance() >= current_bound)
+		{
+			return 0;
+		}	
+		
 		int count = 0;
-		for (int i=0; i<TSPPath::full(); i++) {
-			if (!_path.contains(i)){
-//				TSPTask* t  = new TSPTask(this, i);
-				TSPTask* t = reusealloc(i);
+		for (int i = 0; i < TSPPath::full(); i++)
+		{
+			if (!_path.contains(i))
+			{
+				//TSPTask* t  = new TSPTask(this, i);
+				TSPTask *t = reusealloc(i);
 				collection->push(t);
-				count ++;
+				count++;
 			}
 		}
 		return count;
 	}
 
-	void merge(TaskCollection* collection) override {
-		for (int p=0; p<collection->size(); p++) {
-			TSPTask* t = (TSPTask*) collection->pop();
-//			delete t;
+	void merge(TaskCollection *collection) override
+	{
+		for (int p = 0; p < collection->size(); p++)
+		{
+			TSPTask *t = (TSPTask *)collection->pop();
+			//			delete t;
 			reusefree(t);
 		}
 	}
 
-	void solve() override {
-	//std::cout << "solving " << _path << "\n";
-		if (_path.size() == TSPPath::full()) {
+	void solve() override
+	{
+		// std::cout << "solving " << _path << "\n";
+		if (_path.size() == TSPPath::full())
+		{
 			_path.push(TSPPath::FIRST_NODE); // last node = first node
-			if (_path.distance() < _shortest.distance())
-				_shortest = _path;
+
+			// We get current shortest path atomically
+			update_shortest(_path);
+
 			_path.pop();
-		} else {
-			for (int i=0; i<TSPPath::full(); i++) {
-				if (!_path.contains(i)) {
+		}
+		else
+		{
+
+			TSPPath* current_shortest = _shortest.load(std::memory_order_acquire);
+			int current_bound = current_shortest->distance();
+
+			for (int i = 0; i < TSPPath::full(); i++)
+			{
+				if (!_path.contains(i))
+				{
 					_path.push(i);
-					if (_path.distance() < _shortest.distance())
+					
+					if (_path.distance() < current_bound)
 						solve();
 					_path.pop();
 				}
@@ -178,11 +243,23 @@ public:
 		}
 	}
 
-	void write(std::ostream& os) const override {
+	void write(std::ostream &os) const override
+	{
 		std::cout << "Task(c=" << _cutoff_size << ')' << _path;
 	}
 };
 
-TSPGraph* TSPPath::_graph;
-TSPPath TSPTask::_shortest = [] { TSPPath s; s.maximise(); return s; }();
-std::vector<TSPTask*> TSPTask::_free_list;
+TSPGraph *TSPPath::_graph;
+/* TSPPath TSPTask::_shortest = []
+{ TSPPath s; s.maximise(); return s; }(); */
+TSPPath *initShortest()
+{
+	TSPPath *p = new TSPPath();
+	p->maximise();
+	return p;
+}
+
+std::atomic<TSPPath *> TSPTask::_shortest{initShortest()};
+
+//std::vector<TSPTask *> TSPTask::_free_list;
+thread_local std::vector<TSPTask *> TSPTask::_free_list;

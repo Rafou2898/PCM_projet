@@ -14,7 +14,7 @@ private:
     mutex global_mutex;
     vector<Task *> work_queue;
     atomic<bool> finished;
-    atomic<uint64_t> active_tasks;
+    atomic<int64_t> active_tasks;
     int nb_threads;
 
 public:
@@ -91,9 +91,9 @@ private:
                 t->solve();
 
                 // One less leaf
-                uint64_t r = active_tasks.fetch_sub(1, std::memory_order_relaxed);
+               int64_t remaining = active_tasks.fetch_sub(1, std::memory_order_acq_rel) - 1;
 
-                if (r == 1)
+                if (remaining == 0)
                 {
                     finished.store(true, std::memory_order_relaxed);
                 }
@@ -105,9 +105,10 @@ private:
                     for (int i = 0; i < n; i++)
                         work_queue.push_back(coll[i]);
                 }
-				 active_tasks.fetch_add(n - 1);
+				 active_tasks.fetch_add(n - 1, std::memory_order_release);
 				 //cout << "active tasks: " << active_tasks.load() << endl;
-                t->merge(&coll);
+                //t->merge(&coll);
+                coll.clear();
             }
         }
     }
