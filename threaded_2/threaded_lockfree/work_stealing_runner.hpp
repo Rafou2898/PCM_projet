@@ -6,7 +6,23 @@
 #include <atomic>
 #include <random>
 #include <algorithm>
-#include "my_logs.hpp"
+
+#define DEBUG_LOGS 1
+
+#if DEBUG_LOGS
+    #define LOG(msg) do { \
+        std::cout << "[T" << std::this_thread::get_id() << "] " << msg << std::endl; \
+    } while(0)
+    
+    #define LOG_STAT(label, value) do { \
+        std::cout << "[STAT] " << label << ": " << value << std::endl; \
+    } while(0)
+#else
+    #define LOG(msg) do {} while(0)
+    #define LOG_STAT(label, value) do {} while(0)
+#endif
+
+
 
 
 using namespace std;
@@ -19,13 +35,6 @@ private:
 
     std::atomic<bool> _finished;
     std::atomic<int64_t> _active_tasks;
-
-    std::atomic<int64_t> _total_pops{0};
-    std::atomic<int64_t> _total_steals{0};
-    std::atomic<int64_t> _successful_steals{0};
-    std::atomic<int64_t> _total_splits{0};
-    std::atomic<int64_t> _total_solves{0};
-    std::atomic<int64_t> _pruned_tasks{0};
 
     void worker_loop(int thread_id)
     {
@@ -45,32 +54,12 @@ private:
             {
                 LOG("Worker " << thread_id << " trying to steal work");
                 task = steal_work(thread_id);
-                if (task != nullptr)
-                {
-                    LOG("Worker " << thread_id << " stole task");
-                    _successful_steals++;
-                    idle_cycles = 0;
-                }
             }
 
             // here we have the case where we stole nothing
             if (task == nullptr)
             {
-                LOG("Worker " << thread_id << " idle -> stole nothing");
-                idle_cycles++;
-                if (idle_cycles % 10000 == 0)
-                {
-                    int64_t active = _active_tasks.load();
-                    LOG("Worker " << thread_id << " idle (iter=" << idle_cycles
-                                  << ", active_tasks=" << active << ")");
 
-                    if (idle_cycles >= 100000)
-                    {
-                        LOG(" Worker " << thread_id << " STUCK! Dumping state:");
-                        dump_state();
-                        idle_cycles = 0; // Reset pour ne pas spam
-                    }
-                }
                 // maybe it's over then we return
                 if (check_termination())
                 {
@@ -81,65 +70,29 @@ private:
                 this_thread::yield();
                 continue;
             }
-            LOG("Worker " << thread_id << " processing task");
+
             process_task(task, my_deque);
         }
-    }
-    void dump_state()
-    {
-        LOG_STAT("=== GLOBAL STATE DUMP ===", "");
-        LOG_STAT("_active_tasks", _active_tasks.load());
-        LOG_STAT("_finished", _finished.load());
-
-        for (int i = 0; i < _num_threads; i++)
-        {
-            int size = _deques[i]->size();
-            LOG_STAT("  deque[" << i << "].size()", size);
-        }
-
-        LOG_STAT("Total pops", _total_pops.load());
-        LOG_STAT("Total steals attempted", _total_steals.load());
-        LOG_STAT("Successful steals", _successful_steals.load());
-        LOG_STAT("Total splits", _total_splits.load());
-        LOG_STAT("Total solves", _total_solves.load());
-        LOG_STAT("=========================", "");
     }
 
     void process_task(Task *task, WorkStealingDeque<Task> *my_deque)
     {
         TaskStack coll(64);
-        LOG("Processing task -> Calling split()");
         int n = task->split(&coll);
-        LOG("Processing task, split returned " << n);
+
         if (n == 0)
         {
-            LOG("Solving task");
-            _total_solves++;
             task->solve();
 
             int64_t remaining = _active_tasks.fetch_sub(1, memory_order_acq_rel) - 1;
             if (remaining == 0)
             {
-                LOG(" Last task finished! Setting _finished=true");
-                _finished.store(true, std::memory_order_release);
-            }
-
-            
-            if (remaining < 0)
-            {
-                LOG(" ERROR: _active_tasks went negative! remaining=" << remaining);
+                _finished.store(true, memory_order_release);
             }
         }
         else
         {
-            _total_splits++;
-
-            LOG("Split into " << n << " subtasks, active_tasks="
-                              << _active_tasks.load() << " → "
-                              << (_active_tasks.load() + n - 1));
-
-            // CRITIQUE : Incrémenter AVANT de pusher
-            _active_tasks.fetch_add(n - 1, std::memory_order_release);
+            _active_tasks.fetch_add(n - 1);
             for (int i = 0; i < n; i++)
             {
                 my_deque->push(coll[i]);
@@ -203,14 +156,9 @@ private:
 
             if (all_empty)
             {
-                LOG("Termination condition met: active_tasks=0 and all deques empty");
                 _finished.store(true, memory_order_release);
 
                 return true;
-            }
-            else
-            {
-                LOG(" active_tasks=0 but some deques not empty!");
             }
         }
         return false;

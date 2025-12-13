@@ -118,22 +118,22 @@ private:
 	// this does not work with multiple threads!
 	TSPTask *reusealloc(int node)
 	{
-		if (_free_list.empty())
+		/* if (_free_list.empty())
 			return new TSPTask(this, node);
 		TSPTask *p = _free_list.back();
 		_free_list.pop_back();
 		p->_path = _path;
 		p->_cutoff_size = _cutoff_size;
 		p->_path.push(node);
-		return p;
-		//return new TSPTask(this, node);
+		return p; */
+		return new TSPTask(this, node);
 	}
 
 	// this does not work with multiple threads!
 	void reusefree(TSPTask *p)
 	{
-		_free_list.push_back(p);
-		//delete p;
+		/* _free_list.push_back(p); */
+		delete p;
 	}
 
 	TSPPath _path;
