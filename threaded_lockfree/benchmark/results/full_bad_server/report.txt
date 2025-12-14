@@ -1,0 +1,17 @@
+================================================================================
+TSP WORK-STEALING BENCHMARK REPORT
+================================================================================
+
+SPEEDUP SUMMARY:
+----------------------------------------
+5 cities: 0.01x speedup, 0.23% efficiency
+8 cities: 0.67x speedup, 16.75% efficiency
+12 cities: 1.73x speedup, 43.24% efficiency
+
+SCALABILITY:
+----------------------------------------
+8 cities: 0.001609s
+10 cities: 0.007477s
+12 cities: 0.331047s
+14 cities: 11.484960s
+
