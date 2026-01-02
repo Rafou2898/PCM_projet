@@ -31,38 +31,58 @@ private:
 	int _node[MAX_GRAPH];
 	int _size;
 	int _distance;
-	std::bitset<MAX_GRAPH> _contents;
+	// Try of optimisation of calls of bitset
+	//std::bitset<MAX_GRAPH> _contents;
+	uint32_t _content_mask; //ADDED
+
+	// Try of optimisation to remove calls of _graph->size()
+	static int _graph_size; //ADDED
 
 public:
 	static void setup(TSPGraph *graph)
 	{
 		_graph = graph;
+		// Try of optimisation to remove calls of _graph->size()
+		_graph_size = graph->size(); //ADDED
 		if (_graph->size() > MAX_GRAPH)
 			throw std::runtime_error("Graph bigger than MAX_GRAPH");
 	}
-	static int full() { return _graph->size(); } // the size of a full path
+
+	// Try of optimisation to remove calls of _graph->size()
+	static int full() { return _graph_size;  } // the size of a full path // MODIFIED
 
 	TSPPath()
 	{
 		_node[0] = FIRST_NODE;
 		_size = 1;
 		_distance = 0;
-		_contents.reset();
-		_contents.set(FIRST_NODE);
+
+		// Try of optimisation of calls of bitset
+		_content_mask = 0; // ADDED
+		_content_mask |= (1 << FIRST_NODE);  //ADDED
+		/* _contents.reset();
+		_contents.set(FIRST_NODE); */
 	}
 
 	void maximise() { _distance = INT_MAX; }
 	int size() { return _size; }
 	int distance() { return _distance; }
-	bool contains(int i) { return _contents.test(i); }
+	
+	// Try of optimisation of calls of bitset
+	bool contains(int i) { return (_content_mask & (1u << i)) != 0; } 
+	//bool contains(int i) { return _contents.test(i); }
 	int tail() { return _node[_size - 1]; }
 
 	void push(int node)
 	{
-		if (node >= _graph->size())
+	// Try of optimisation to remove calls of _graph->size()
+		if (node >= _graph_size) //MODIFIED
 			throw std::runtime_error("Node outside graph.");
 		_distance += _graph->distance(tail(), node);
-		_contents.set(node);
+
+		// Try of optimisation of calls of bitset
+		_content_mask |= (1u << node); // ADDED
+		//_contents.set(node);
 		_node[_size++] = node;
 	}
 
@@ -74,7 +94,8 @@ public:
 		int oldtail = _node[_size];
 		int newtail = _node[_size - 1];
 		if (oldtail != FIRST_NODE)
-			_contents.reset(oldtail);
+			_content_mask &= ~(1u << oldtail); // ADDED
+		  //_contents.reset(oldtail);
 		_distance -= _graph->distance(newtail, oldtail);
 	}
 
@@ -126,14 +147,14 @@ private:
 		p->_cutoff_size = _cutoff_size;
 		p->_path.push(node);
 		return p;
-		//return new TSPTask(this, node);
+		// return new TSPTask(this, node);
 	}
 
 	// this does not work with multiple threads!
 	void reusefree(TSPTask *p)
 	{
 		_free_list.push_back(p);
-		//delete p;
+		// delete p;
 	}
 
 	TSPPath _path;
@@ -274,3 +295,6 @@ std::atomic<TSPPath *> TSPTask::_shortest{initShortest()};
 
 // std::vector<TSPTask *> TSPTask::_free_list;
 thread_local std::vector<TSPTask *> TSPTask::_free_list;
+
+// Try of optimisation to remove calls of _graph->size()
+int TSPPath::_graph_size;   // ADDED
