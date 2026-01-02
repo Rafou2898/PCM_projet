@@ -206,6 +206,8 @@ public:
 	// Task interface implementation: split, merge, solve, write
 	int split(TaskCollection *collection) override
 	{
+		// Small optimization: Call TSPPath::full() only once
+		const int full = TSPPath::full();
 		collection->clear();
 		if (_path.size() >= _cutoff_size)
 			return 0;
@@ -220,7 +222,7 @@ public:
 		}
 
 		int count = 0;
-		for (int i = 0; i < TSPPath::full(); i++)
+		for (int i = 0; i < full; i++)
 		{
 			if (!_path.contains(i))
 			{
@@ -246,7 +248,10 @@ public:
 	void solve() override
 	{
 		// std::cout << "solving " << _path << "\n";
-		if (_path.size() == TSPPath::full())
+
+		// Small optimization: Call TSPPath::full() only once
+		const int full = TSPPath::full();
+		if (_path.size() == full)
 		{
 			_path.push(TSPPath::FIRST_NODE); // last node = first node
 
@@ -261,7 +266,7 @@ public:
 			TSPPath *current_shortest = _shortest.load(std::memory_order_acquire);
 			int current_bound = current_shortest->distance();
 
-			for (int i = 0; i < TSPPath::full(); i++)
+			for (int i = 0; i < full; i++)
 			{
 				if (!_path.contains(i))
 				{
