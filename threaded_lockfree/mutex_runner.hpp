@@ -106,8 +106,7 @@ private:
                         work_queue.push_back(coll[i]);
                 }
 				 active_tasks.fetch_add(n - 1, std::memory_order_release);
-				 //cout << "active tasks: " << active_tasks.load() << endl;
-                //t->merge(&coll);
+				
                 coll.clear();
             }
         }
