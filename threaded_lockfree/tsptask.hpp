@@ -198,6 +198,10 @@ public:
 	TSPTask() { _cutoff_size = TSPPath::full(); }
 	~TSPTask() override = default;
 
+	int remaining(){
+		return TSPPath::full() - _path.size();
+	}
+
 	// cutoff set, expressed as a distance from full path
 	void cutoff(int c) { _cutoff_size = TSPPath::full() - c; }
 	// TSPPath& result() { return _shortest; }

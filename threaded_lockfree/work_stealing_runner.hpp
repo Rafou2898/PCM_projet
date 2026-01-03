@@ -10,6 +10,15 @@
 
 using namespace std;
 
+int64_t factorial(int n){
+    int64_t f = 1;
+    for(int i = 2; i <= n; i++){
+        f *= i;
+    }
+    return f;
+}
+
+
 struct WSStats
 {
     uint64_t local_push = 0;
@@ -37,6 +46,9 @@ private:
     std::atomic<int64_t> _total_solves{0};
     std::atomic<int64_t> _pruned_tasks{0};
 
+    atomic<int64_t> leaves_remaining;
+    atomic<int64_t> factorial_array[21];
+
     std::vector<WSStats> _per_thread_stats;
 
     void worker_loop(int thread_id)
@@ -44,7 +56,8 @@ private:
         WorkStealingDeque<Task> *my_deque = _deques[thread_id];
         int idle_cycles = 0;
         // main logic for a worker
-        while (!_finished.load(memory_order_acquire))
+        //while (!_finished.load(memory_order_acquire))
+        while(leaves_remaining.load() > 0)
         {
 
             Task *task = nullptr;
@@ -98,10 +111,10 @@ private:
                     }
                 }
                 // maybe it's over then we return
-                if (check_termination())
-                {
-                    return;
-                }
+                // if (check_termination())
+                // {
+                //     return;
+                // }
 
                 // if not over then we just yield and try again
                 this_thread::yield();
@@ -137,18 +150,21 @@ private:
         LOG("Processing task -> Calling split()");
         int n = task->split(&coll);
         LOG("Processing task, split returned " << n);
+
+        int remaining = static_cast<TSPTask*>(task)->remaining();
         if (n == 0)
         {
             LOG("Solving task");
             _total_solves++;
             task->solve();
 
-            int64_t remaining = _active_tasks.fetch_sub(1, memory_order_acq_rel) - 1;
-            if (remaining == 0)
-            {
-                LOG(" Last task finished! Setting _finished=true");
-                _finished.store(true, std::memory_order_release);
-            }
+            //int64_t remaining = _active_tasks.fetch_sub(1, memory_order_acq_rel) - 1;
+            leaves_remaining.fetch_sub(factorial_array[remaining].load());
+            // if (remaining == 0)
+            // {
+            //     LOG(" Last task finished! Setting _finished=true");
+            //     _finished.store(true, std::memory_order_release);
+            // }
 
             if (remaining < 0)
             {
@@ -285,10 +301,18 @@ public:
     }
     void run(Task *root) override
     {
+        startTimer();
         _finished.store(false, std::memory_order_relaxed);
         _active_tasks.store(1, std::memory_order_relaxed);
 
-        startTimer();
+        int64_t total_leaves = factorial(TSPPath::full() - 1);
+        leaves_remaining.store(total_leaves);
+
+        for(int i = 0 ; i < TSPPath::full(); i++){
+            factorial_array[i].store(factorial(i));
+        }
+
+        //startTimer();
         // Root task is pushed to deque 0 (so for thread 0)
         _deques[0]->push(root);
 
