@@ -8,8 +8,18 @@
 #include <algorithm>
 #include "my_logs.hpp"
 
-
 using namespace std;
+
+struct WSStats
+{
+    uint64_t local_push = 0;
+    uint64_t local_pop = 0;
+    uint64_t steal_attempts = 0;
+    uint64_t steal_success = 0;
+    uint64_t empty_loops = 0;
+    uint64_t tasks_processed = 0;
+};
+
 class WorkStealingRunner : public TaskRunner
 {
 private:
@@ -27,6 +37,8 @@ private:
     std::atomic<int64_t> _total_solves{0};
     std::atomic<int64_t> _pruned_tasks{0};
 
+    std::vector<WSStats> _per_thread_stats;
+
     void worker_loop(int thread_id)
     {
         WorkStealingDeque<Task> *my_deque = _deques[thread_id];
@@ -40,9 +52,18 @@ private:
             // First the thread check if it has some work
             task = my_deque->pop();
             LOG("Worker " << thread_id << " started");
+            if (task)
+            {
+                _per_thread_stats[thread_id].local_pop++;
+                _per_thread_stats[thread_id].tasks_processed++;
+                process_task(task, my_deque, thread_id);
+                continue;
+            }
+
             // if we have nothing, then we try stealing work from someone else
             if (task == nullptr)
             {
+                // cout << "Its time to steal work" << endl;
                 LOG("Worker " << thread_id << " trying to steal work");
                 task = steal_work(thread_id);
                 if (task != nullptr)
@@ -50,12 +71,17 @@ private:
                     LOG("Worker " << thread_id << " stole task");
                     _successful_steals++;
                     idle_cycles = 0;
+                    _per_thread_stats[thread_id].steal_success++;
+                    _per_thread_stats[thread_id].tasks_processed++;
+                    process_task(task, my_deque, thread_id);
+                    continue;
                 }
             }
 
             // here we have the case where we stole nothing
             if (task == nullptr)
             {
+                _per_thread_stats[thread_id].empty_loops++;
                 LOG("Worker " << thread_id << " idle -> stole nothing");
                 idle_cycles++;
                 if (idle_cycles % 10000 == 0)
@@ -81,8 +107,8 @@ private:
                 this_thread::yield();
                 continue;
             }
-            LOG("Worker " << thread_id << " processing task");
-            process_task(task, my_deque);
+            // LOG("Worker " << thread_id << " processing task");
+            // process_task(task, my_deque);
         }
     }
     void dump_state()
@@ -105,7 +131,7 @@ private:
         LOG_STAT("=========================", "");
     }
 
-    void process_task(Task *task, WorkStealingDeque<Task> *my_deque)
+    void process_task(Task *task, WorkStealingDeque<Task> *my_deque, int thread_id)
     {
         TaskStack coll(64);
         LOG("Processing task -> Calling split()");
@@ -124,7 +150,6 @@ private:
                 _finished.store(true, std::memory_order_release);
             }
 
-            
             if (remaining < 0)
             {
                 LOG(" ERROR: _active_tasks went negative! remaining=" << remaining);
@@ -135,14 +160,15 @@ private:
             _total_splits++;
 
             LOG("Split into " << n << " subtasks, active_tasks="
-                              << _active_tasks.load() << " → "
+                              << _active_tasks.load() << " -> "
                               << (_active_tasks.load() + n - 1));
 
-            // CRITIQUE : Incrémenter AVANT de pusher
+            // il faut incrémenter avant de pusher
             _active_tasks.fetch_add(n - 1, std::memory_order_release);
             for (int i = 0; i < n; i++)
             {
                 my_deque->push(coll[i]);
+                _per_thread_stats[thread_id].local_push++;
             }
 
             coll.clear();
@@ -154,6 +180,7 @@ private:
     // We could try to optimize this (finding a thread with a lot of work (how?), round-robin?,....)
     Task *steal_work(int my_id)
     {
+        _per_thread_stats[my_id].steal_attempts++;
         // We try stealing another thread randomly
         static thread_local std::random_device rd;
         static thread_local std::mt19937 random(rd());
@@ -175,6 +202,7 @@ private:
 
         for (int victim_id : victims)
         {
+            // cout << " stealing victim: " << victim_id << endl;
             Task *stolen = _deques[victim_id]->steal();
             if (stolen != nullptr)
             {
@@ -185,6 +213,7 @@ private:
         // nothing to steal
         return nullptr;
     }
+
     bool check_termination()
     {
 
@@ -216,6 +245,27 @@ private:
         return false;
     }
 
+    void print_stats()
+    {
+        uint64_t sp = 0, lp = 0, sa = 0, ss = 0, el = 0, tp = 0;
+        for (int i = 0; i < _num_threads; i++)
+        {
+            sp += _per_thread_stats[i].local_push;
+            lp += _per_thread_stats[i].local_pop;
+            sa += _per_thread_stats[i].steal_attempts;
+            ss += _per_thread_stats[i].steal_success;
+            el += _per_thread_stats[i].empty_loops;
+            tp += _per_thread_stats[i].tasks_processed;
+        }
+        std::cout << "WS stats: pushes=" << sp
+                  << " pops=" << lp
+                  << " steal_attempts=" << sa
+                  << " steal_success=" << ss
+                  << " empty_loops=" << el
+                  << " tasks_processed=" << tp
+                  << "\n";
+    }
+
 public:
     WorkStealingRunner(int num_threads, int deque_capacity = 1024) : _num_threads(num_threads), _finished(false), _active_tasks(0)
     {
@@ -224,6 +274,7 @@ public:
         {
             _deques.push_back(new WorkStealingDeque<Task>(deque_capacity));
         }
+        _per_thread_stats.resize(num_threads);
     }
     ~WorkStealingRunner()
     {
@@ -253,6 +304,7 @@ public:
         {
             worker.join();
         }
+        print_stats();
 
         _workers.clear();
         stopTimer();
