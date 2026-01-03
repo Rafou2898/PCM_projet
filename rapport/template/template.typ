@@ -51,7 +51,7 @@
       Auteur: *#author* \
       Professeur: *#professor* \
       //assistant: *#assistant* \
-      Classe: *#classroom* \
+      Cours: *#classroom* \
       Date: *#date*
     ],
   )
@@ -76,7 +76,7 @@
       #let footer_left_part = (
         "Auteur: " + author + "\n" + "Professeur: " + professor + "\n" + "\n"
       )
-      #let footer_right_part = lab_title + "\n" + "Classe: " + classroom
+      #let footer_right_part = lab_title + "\n" + "Cours: " + classroom
       #line(length: 100%, stroke: 0.5pt + header_and_footer_color)
       #grid(
         columns: (3fr, 1fr, 3fr),
