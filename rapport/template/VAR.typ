@@ -1,0 +1,1 @@
+#let image_path="img/mse.svg"
