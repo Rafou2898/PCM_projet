@@ -59,8 +59,8 @@
   // End of title page -----------------------------------------------
 
   set page(
-    numbering: "i",
-    margin: (top: 3.5cm, bottom: 3.5cm, left: 4cm, right: 3cm),
+    numbering: none,
+    margin: (top: 3.5cm, bottom: 3.5cm, left: 2cm, right: 2cm),
     header: [
       #set text(header_and_footer_font_size, fill: header_and_footer_color)
       #grid(

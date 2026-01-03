@@ -57,31 +57,28 @@
    show heading.where(level: 1): it => {
     set text(font: font, size: 18pt, weight: bold_value, fill: font_color)
     it
-    v(1em)
+    v(0.5em)
   }
 
 
-  show heading.where(level: 2): it => [
-    #v(1em)
-    #set text(font: font, size: 15pt, weight: bold_value, fill: font_color)
-    #it
-    #v(0.5em)
-  ]
+  show heading.where(level: 2): it => {
 
-  show heading.where(level: 3): it => [
-    #v(1em)
-    #set text(font: font, size: 13pt, weight: bold_value, fill: font_color)
-    #it
-    #v(0.5em)
-  ]
+    set text(font: font, size: 15pt, weight: bold_value, fill: font_color)
+    it
+  }
 
-  show heading.where(level: 4): it => [
-    #v(1em)
-    #set text(font: font, size: font_size, weight: bold_value, fill: font_color)
-    #it
-    #v(0.5em)
-  ]
+  show heading.where(level: 3): it => {
+    set text(font: font, size: 13pt, weight: bold_value, fill: font_color)
+    it
+    v(0.5em)
+}
 
+  show heading.where(level: 4): it => {
+    set text(font: font, size: font_size, weight: bold_value, fill: font_color)
+    it
+    v(0.5em)
+  }
+  
   show strong: it => [
     #set text(font: font, weight: bold_value)
     #it
