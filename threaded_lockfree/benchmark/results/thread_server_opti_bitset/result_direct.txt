@@ -1,0 +1,22 @@
+
+INTERRESSANT POUR LE DIRECT
+
+Testing 0 threads... 
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 0 --cutoff 8 --quiet
+run n°1.
+run n°2.
+run n°3.
+run n°4.
+run n°5.
+ (direct: 35.9916s, mutex: 2.8591s, worksteal: 1.1768s)
+Testing 10 threads... 
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 10 --cutoff 8 --quiet
+run n°1.
+run n°2.
+run n°3.
+run n°4.
+run n°5.
+ (direct: 35.9653s, mutex: 7.6191s, worksteal: 3.9156s)
+Testing 20 threads... 
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 20 --cutoff 8 --quiet
+-----------------------------------------------
