@@ -1,7 +1,7 @@
 #let font_color = rgb(50, 50, 50)
 #let header_and_footer_color = rgb("#afafaf")
 #let font = "Liberation Serif"
-#let font_size = 9pt
+#let font_size = 11pt
 #let bold_value = "bold"
 #let emphasis_color = rgb("#e0e0e0")
 
@@ -62,14 +62,14 @@
 
   show heading.where(level: 2): it => [
     #v(1em)
-    #set text(font: font, size: 12pt, weight: bold_value, fill: font_color)
+    #set text(font: font, size: 15pt, weight: bold_value, fill: font_color)
     #it
     #v(0.5em)
   ]
 
   show heading.where(level: 3): it => [
     #v(1em)
-    #set text(font: font, size: 10pt, weight: bold_value, fill: font_color)
+    #set text(font: font, size: 13pt, weight: bold_value, fill: font_color)
     #it
     #v(0.5em)
   ]

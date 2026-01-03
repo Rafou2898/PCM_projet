@@ -16,16 +16,12 @@
 
 
 = Introduction
-
+#lorem(100)
 = Version mutexer 
-
 = Work-Stealing Deque Lev-Chase
 == Choix d'implémentation
-
 = Mesures
-
 == Tailles cutoff
-
 = Profiling
 = Optimisations possibles
 = Problèmes rencontrés
