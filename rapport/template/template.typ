@@ -39,7 +39,7 @@
 
       #set text(size: 18pt, weight: "bold")
       #text[
-        Département #Department\
+        #Department\
         Unité d'enseignement #course
       ]
     ],
@@ -59,7 +59,7 @@
   // End of title page -----------------------------------------------
 
   set page(
-    numbering: "1",
+    numbering: "i",
     margin: (top: 3.5cm, bottom: 3.5cm, left: 4cm, right: 3cm),
     header: [
       #set text(header_and_footer_font_size, fill: header_and_footer_color)

@@ -54,11 +54,12 @@
 
   set heading(numbering: "1.1.1.1.")
 
-  show heading.where(level: 1): it => [
-    #set text(font: font, size: 18pt, weight: bold_value, fill: font_color)
-    #it
-    #v(1em)
-  ]
+   show heading.where(level: 1): it => {
+    set text(font: font, size: 18pt, weight: bold_value, fill: font_color)
+    it
+    v(1em)
+  }
+
 
   show heading.where(level: 2): it => [
     #v(1em)
