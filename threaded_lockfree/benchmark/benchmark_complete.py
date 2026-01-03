@@ -11,7 +11,6 @@ Tests:
 import subprocess
 import json
 import statistics
-import matplotlib.pyplot as plt
 from pathlib import Path
 import sys
 
@@ -27,39 +26,36 @@ class CompleteBenchmark:
         
         # Ajouter les options
         if 'cities' in kwargs:
-            print(f"⚠️  Using cities={kwargs['cities']} option (may override tsp_file settings)")
             cmd.extend(['--cities', str(kwargs['cities'])])
         if 'threads' in kwargs:
             cmd.extend(['--threads', str(kwargs['threads'])])
         if 'cutoff' in kwargs:
             cmd.extend(['--cutoff', str(kwargs['cutoff'])])
         if 'skip_direct' in kwargs:
-            print("⚠️  Skipping direct method as per argument")
+            print("  Skipping direct method")
             cmd.extend(['--skip-direct'])
         if 'skip_mutex' in kwargs:
-            print("⚠️  Skipping mutex method as per argument")
+            print("  Skipping mutex method")
             cmd.extend(['--skip-mutex'])
         if 'skip_worksteal' in kwargs:
-            print("⚠️  Skipping worksteal method as per argument")
+            print("  Skipping worksteal method")
             cmd.extend(['--skip-worksteal'])
-        if 'skip_partitioned' in kwargs:
-            print("⚠️  Skipping partitioned method as per argument")
-            cmd.extend(['--skip-partitioned'])
         if kwargs.get('no_cutoff', False):
             cmd.append('--no-cutoff')
         
         cmd.append('--quiet')
-        print(f"\n🔹 Commande: {' '.join(cmd)}")
+        print(f"\n Commande: {' '.join(cmd)}")
         results = []
         for run in range(self.num_runs):
             try:
+                print(f"run n°{run+1}.")
                 result = subprocess.run(cmd, capture_output=True, text=True, 
-                                       timeout=120, check=True)
+                                        check=True)
                 print(f"Sortie run {run+1}:\n{result.stdout.strip()}")
                 parsed = self.parse_output(result.stdout)
                 results.append(parsed)
             except (subprocess.TimeoutExpired, subprocess.CalledProcessError) as e:
-                print(f"⚠️  Error in run {run+1}: {e}")
+                print(f" Error in run {run+1}: {e}")
                 return None
         
         return self.compute_stats(results)
@@ -79,7 +75,7 @@ class CompleteBenchmark:
                 try:
                     results[method] = float(time_part)
                 except ValueError:
-                    print(f"⚠️  Couldn't parse time from line: {line}")
+                    print(f"Couldn't parse time from line: {line}")
                     continue
         
         return results
@@ -107,30 +103,29 @@ class CompleteBenchmark:
     def test_scalability(self):
         """Test 1: Impact du nombre de villes"""
         print("\n" + "="*80)
-        print("📈 TEST 1: SCALABILITÉ (Impact du nombre de villes)")
+        print(" TEST 1: SCALABILITÉ (Impact du nombre de villes)")
         print("="*80 + "\n")
         
         results = {}
-        #cities_range = [8, 10, 12, 14, 15, 16]
-        cities_range = [14]
+        cities_range = [15]
         
         for cities in cities_range:
             tsp_file = f"../dj{cities:02d}.tsp"
             if not Path(tsp_file).exists():
-                print(f"⚠️  {tsp_file} not found, using ../dj38.tsp")
+                print(f"  {tsp_file} not found, using ../dj38.tsp")
                 tsp_file = f"../dj38.tsp"
                 
                 
             
             print(f"Testing {cities} cities...", end=" ", flush=True)
-            stats = self.run_test(tsp_file, cities=cities, threads=14, cutoff=8, skip_direct=True, skip_mutex=True, skip_partitioned=True)
+            stats = self.run_test(tsp_file, cities=cities, threads=150, cutoff=8, skip_mutex=True, skip_direct=True, skip_worksteal=True)
             
             if stats:
                 results[cities] = stats
-                print(f"✅ (direct: {stats.get('direct', {}).get('mean', 0):.4f}s, "
+                print(f" (direct: {stats.get('direct', {}).get('mean', 0):.4f}s, "
                       f"worksteal: {stats.get('worksteal', {}).get('mean', 0):.4f}s)")
             else:
-                print("❌")
+                print("aucune stats")
         
         self.all_results['scalability'] = results
         self.print_scalability_results(results)
@@ -139,36 +134,29 @@ class CompleteBenchmark:
     def test_cutoff_impact(self):
         """Test 2: Impact du cutoff"""
         print("\n" + "="*80)
-        print("✂️  TEST 2: IMPACT DU CUTOFF")
+        print("  TEST 2: IMPACT DU CUTOFF")
         print("="*80 + "\n")
         
         results = {}
-        cutoff_values = [0, 2, 3, 4, 5, 6, 7, 8]
+        cutoff_values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         tsp_file = "../dj14.tsp"
-        
+        cities = tsp_file.split('dj')[-1].split('.tsp')[0]
         if not Path(tsp_file).exists():
-            print(f"⚠️  {tsp_file} not found!")
-            return {}
-        
-        # Test avec cutoff désactivé
-        print(f"Testing no cutoff...", end=" ", flush=True)
-        stats = self.run_test(tsp_file, threads=4, no_cutoff=True)
-        if stats:
-            results['no_cutoff'] = stats
-            print(f"✅ (worksteal: {stats.get('worksteal', {}).get('mean', 0):.4f}s)")
-        else:
-            print("❌")
+            tsp_file = "../dj38.tsp"
+            
+            
+
         
         # Test avec différentes valeurs de cutoff
         for cutoff in cutoff_values:
             print(f"Testing cutoff={cutoff}...", end=" ", flush=True)
-            stats = self.run_test(tsp_file, threads=4, cutoff=cutoff)
+            stats = self.run_test(tsp_file, threads=256, cutoff=cutoff, skip_direct=True, skip_mutex=True)
             
             if stats:
                 results[f'cutoff_{cutoff}'] = stats
-                print(f"✅ (worksteal: {stats.get('worksteal', {}).get('mean', 0):.4f}s)")
+                print(f" (worksteal: {stats.get('worksteal', {}).get('mean', 0):.4f}s)")
             else:
-                print("❌")
+                print("aucune stats")
         
         self.all_results['cutoff'] = results
         cities = tsp_file.split('dj')[-1].split('.tsp')[0]
@@ -178,28 +166,33 @@ class CompleteBenchmark:
     def test_thread_scaling(self):
         """Test 3: Impact du nombre de threads"""
         print("\n" + "="*80)
-        print("🧵 TEST 3: SCALING DES THREADS")
+        print(" TEST 3: SCALING DES THREADS")
         print("="*80 + "\n")
         
         results = {}
-        #thread_counts = [10,20,50,70,100,150,200]
-        thread_counts = [2,4,6,8,10,12,14]
-        tsp_file = "../dj12.tsp"
+        #increment from 1 to 256 by 10
+        thread_counts = list(range(0, 257, 10))
+        #thread_counts = [2,4,6,8,10,12,14]
+        #thread_counts = [256]
+        tsp_file = "../dj15.tsp"
         
+        cities = tsp_file.split('dj')[-1].split('.tsp')[0]
         if not Path(tsp_file).exists():
-            print(f"⚠️  {tsp_file} not found!")
-            return {}
+            tsp_file = "../dj38.tsp"
+            
+            
         
         for threads in thread_counts:
             print(f"Testing {threads} threads...", end=" ", flush=True)
-            stats = self.run_test(tsp_file, threads=threads, cutoff=5)
+            stats = self.run_test(tsp_file, cities=cities, threads=threads, skip_direct=True, cutoff=8)
             
             if stats:
                 results[threads] = stats
-                print(f"✅ (mutex: {stats.get('mutex', {}).get('mean', 0):.4f}s, "
+                print(f" (direct: {stats.get('direct', {}).get('mean', 0):.4f}s, "
+                      f"mutex: {stats.get('mutex', {}).get('mean', 0):.4f}s, "
                       f"worksteal: {stats.get('worksteal', {}).get('mean', 0):.4f}s)")
             else:
-                print("❌")
+                print("aucune stats")
         
         self.all_results['threads'] = results
         self.print_thread_results(results)
@@ -218,9 +211,9 @@ class CompleteBenchmark:
             tsp_file = f"../dj{cities:02d}.tsp"
             if not Path(tsp_file).exists():
                 continue
-            
+            num_threads  = 256
             print(f"Testing {cities} cities...", end=" ", flush=True)
-            stats = self.run_test(tsp_file, threads=4, cutoff=5)
+            stats = self.run_test(tsp_file, threads=num_threads, cutoff=5)
             
             if stats and 'direct' in stats and 'worksteal' in stats:
                 t_direct = stats['direct']['mean']
@@ -229,7 +222,7 @@ class CompleteBenchmark:
                 
                 speedup_mutex = t_direct / t_mutex if t_mutex > 0 else 0
                 speedup_ws = t_direct / t_ws
-                efficiency_ws = speedup_ws / 4  # 4 threads
+                efficiency_ws = speedup_ws / num_threads  # 256 threads
                 
                 results[cities] = {
                     'direct': t_direct,
@@ -240,9 +233,9 @@ class CompleteBenchmark:
                     'efficiency_ws': efficiency_ws
                 }
                 
-                print(f"✅ (speedup: {speedup_ws:.2f}x, efficiency: {efficiency_ws:.2f})")
+                print(f"(speedup: {speedup_ws:.2f}x, efficiency: {efficiency_ws:.2f})")
             else:
-                print("❌")
+                print("aucune stats")
         
         self.all_results['speedup'] = results
         self.print_speedup_results(results)
@@ -250,7 +243,7 @@ class CompleteBenchmark:
     
     def print_scalability_results(self, results):
         """Affiche les résultats de scalabilité"""
-        print("\n📊 Résultats Scalabilité:")
+        print("\nRésultats Scalabilité:")
         print(f"{'Cities':<10} {'Direct (s)':<12} {'Mutex (s)':<12} {'WorkSteal (s)':<12} {'Speedup WS':<12}")
         print("-" * 60)
         
@@ -265,7 +258,7 @@ class CompleteBenchmark:
     
     def print_cutoff_results(self, results, cities):
         """Affiche les résultats du cutoff"""
-        print("\n📊 Résultats Impact Cutoff:")
+        print("\nRésultats Impact Cutoff:")
         print(f"Cities: {cities}")
         print(f"{'Cutoff':<15} {'Direct (s)':<12} {'Mutex (s)':<12} {'WorkSteal (s)':<12}")
         print("-" * 55)
@@ -280,7 +273,7 @@ class CompleteBenchmark:
     
     def print_thread_results(self, results):
         """Affiche les résultats du scaling des threads"""
-        print("\n📊 Résultats Thread Scaling:")
+        print("\n Résultats Thread Scaling:")
         print(f"{'Threads':<10} {'Mutex (s)':<12} {'WorkSteal (s)':<12} {'Speedup M':<12} {'Speedup WS':<12}")
         print("-" * 60)
         
@@ -299,7 +292,7 @@ class CompleteBenchmark:
     
     def print_speedup_results(self, results):
         """Affiche les résultats de speedup"""
-        print("\n📊 Résultats Speedup:")
+        print("\n Résultats Speedup:")
         print(f"{'Cities':<10} {'Speedup Mutex':<15} {'Speedup WS':<15} {'Efficiency WS':<15}")
         print("-" * 60)
         
@@ -311,7 +304,7 @@ class CompleteBenchmark:
         """Sauvegarde tous les résultats"""
         with open('benchmark_complete.json', 'w') as f:
             json.dump(self.all_results, f, indent=2)
-        print(f"\n💾 Tous les résultats sauvegardés dans benchmark_complete.json")
+        print(f"\n Tous les résultats sauvegardés dans benchmark_complete.json")
     
     def generate_report(self):
         """Génère un rapport texte complet"""
@@ -336,11 +329,11 @@ class CompleteBenchmark:
                     f.write(f"{cities} cities: {ws:.6f}s\n")
                 f.write("\n")
         
-        print("📄 Rapport généré dans benchmark_report.txt")
+        print("Rapport généré dans benchmark_report.txt")
 
 
 def main():
-    print("🚀 TSP Complete Benchmark Suite")
+    print("TSP Complete Benchmark Suite")
     print("="*80)
     
     benchmark = CompleteBenchmark(executable="../tsp", num_runs=5)
@@ -355,7 +348,7 @@ def main():
     benchmark.save_all_results()
     benchmark.generate_report()
     
-    print("\n✅ Benchmarking complet terminé!")
+    print("\n Benchmarking complet terminé!")
     print("\nFichiers générés:")
     print("  - benchmark_complete.json (toutes les données)")
     print("  - benchmark_report.txt (rapport résumé)")
