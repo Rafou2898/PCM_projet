@@ -4,6 +4,7 @@
 #include "tsptask.hpp"
 #include "mutex_runner.hpp"
 #include "work_stealing_runner.hpp"
+#include "mutex_runner_factorial.hpp"
 
 /*****************************************************************
   Program to solve a TSP problem with benchmarking capabilities
@@ -18,7 +19,6 @@
     --skip-direct       : Skip direct runner
     --skip-mutex        : Skip mutex runner
     --skip-worksteal    : Skip work-stealing runner
-    --quiet             : Minimal output (only results)
  *****************************************************************/
 
 struct Config {
@@ -29,22 +29,22 @@ struct Config {
     bool use_cutoff = true;
     bool run_direct = true;
     bool run_mutex = true;
+    bool run_mutex_factorial = true;
     bool run_worksteal = true;
     bool run_partitioned = true;
-    bool quiet = false;
 };
 
 void print_usage(const char* prog) {
     std::cerr << "Usage: " << prog << " <file.tsp> [options]\n";
     std::cerr << "\nOptions:\n";
-    std::cerr << "  --cities N      : Resize graph to N cities\n";
-    std::cerr << "  --threads N     : Number of threads\n";
-    std::cerr << "  --cutoff N      : Cutoff value (default: 5)\n";
-    std::cerr << "  --no-cutoff     : Disable cutoff\n";
-    std::cerr << "  --skip-direct   : Skip direct runner\n";
-    std::cerr << "  --skip-mutex    : Skip mutex runner\n";
-    std::cerr << "  --skip-worksteal: Skip work-stealing runner\n";
-    std::cerr << "  --quiet         : Minimal output\n";
+    std::cerr << "  --cities N        : Resize graph to N cities\n";
+    std::cerr << "  --threads N       : Number of threads\n";
+    std::cerr << "  --cutoff N        : Cutoff value (default: 5)\n";
+    std::cerr << "  --no-cutoff       : Disable cutoff\n";
+    std::cerr << "  --skip-direct     : Skip direct runner\n";
+    std::cerr << "  --skip-mutex      : Skip mutex runner\n";
+    std::cerr << "  --skip-worksteal  : Skip work-stealing runner\n";
+    std::cerr << "  --skip-mutex_fact : Skip mutex factorial runner\n";
 }
 
 Config parse_args(int argc, char** argv) {
@@ -84,8 +84,8 @@ Config parse_args(int argc, char** argv) {
         else if (arg == "--skip-worksteal") {
             config.run_worksteal = false;
         }
-        else if (arg == "--quiet" || arg == "-q") {
-            config.quiet = true;
+        else if (arg == "--skip-mutex_fact") {
+            config.run_mutex_factorial = false;
         }
         else {
             std::cerr << "Unknown option: " << arg << "\n";
@@ -113,17 +113,6 @@ int main(int argc, char** argv) {
                      ? config.num_threads 
                      : std::thread::hardware_concurrency();
     
-    if (!config.quiet) {
-        std::cout << "Hardware concurrency: " << std::thread::hardware_concurrency() << std::endl;
-        std::cout << "Graph size: " << graph.size() << " cities" << std::endl;
-        std::cout << "Using " << num_threads << " threads" << std::endl;
-        if (config.use_cutoff) {
-            std::cout << "Cutoff: " << config.cutoff << std::endl;
-        } else {
-            std::cout << "Cutoff: 1" << std::endl;
-        }
-        std::cout << std::endl;
-    }
     
     // Run direct (single-threaded)
     if (config.run_direct) {
@@ -145,11 +134,23 @@ int main(int argc, char** argv) {
         }
         
         MutexTaskRunner r2(num_threads, TSPPath::MAX_GRAPH);
-        if (!config.quiet) {
-            std::cout << "Number of threads: " << num_threads << std::endl;
-        }
+
         r2.run(&tsp2);
         std::cout << "mutex: " << tsp2.result() << " t:" << r2.duration() << std::endl;
+    }
+
+    if (config.run_mutex_factorial) {
+        std::cout << "Running mutex-based factorial parallel..." << std::endl;
+        TSPTask tspFactorial;
+        if (config.use_cutoff) {
+            tspFactorial.cutoff(config.cutoff);
+        } else {
+            tspFactorial.cutoff(1);
+        }
+        
+        StackTaskRunner rFactorial(num_threads, TSPPath::MAX_GRAPH);
+        rFactorial.run(&tspFactorial);
+        std::cout << "mutex_factorial: " << tspFactorial.result() << " t:" << rFactorial.duration() << std::endl;
     }
     
     // Run work-stealing parallel
@@ -161,12 +162,11 @@ int main(int argc, char** argv) {
         }
         
         WorkStealingRunner r3(num_threads, TSPPath::MAX_GRAPH);
-        if (!config.quiet) {
-            std::cout << "Number of threads: " << num_threads << std::endl;
-        }
         r3.run(&tsp3);
         std::cout << "worksteal: " << tsp3.result() << " t:" << r3.duration() << std::endl;
     } 
+
+
     // Run work-stealing parallel
     /* if (config.run_partitioned) {
         std::cout << "Running partitioned task..." << std::endl;
