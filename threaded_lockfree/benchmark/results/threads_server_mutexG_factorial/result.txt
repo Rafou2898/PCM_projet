@@ -1,0 +1,1582 @@
+rafael@phi-2:~/pcm-projet/threaded_lockfree/benchmark$ make bench-threads
+🧵 Running thread scaling benchmark...
+
+================================================================================
+ TEST 3: SCALING DES THREADS
+================================================================================
+
+Testing 1 threads... 
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 1 --cutoff 8 --quiet
+run n°1.
+Sortie run 1:
+Running direct (single-threaded)...
+direct: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:35.9119
+Running mutex-based parallel...
+mutex: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:43.2812
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:44.2347
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1871716 steal_attempts=0 steal_success=0 empty_loops=0 tasks_processed=1871716
+worksteal: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:37.8947
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 1 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:54.959
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:44.213
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1871716 steal_attempts=0 steal_success=0 empty_loops=0 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:37.8743
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 1 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:55.0147
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:44.2463
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1871716 steal_attempts=0 steal_success=0 empty_loops=0 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:37.9157
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 1 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:54.9619
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:44.2277
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1871716 steal_attempts=0 steal_success=0 empty_loops=0 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:37.8914
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 1 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:55.1404
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:44.2004
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1871716 steal_attempts=0 steal_success=0 empty_loops=0 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:38.0982
+ (direct: 35.9119s, mutex: 52.6714s, mutex_G: 44.2244s, worksteal: 37.9349s)
+Testing 10 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 10 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:9.0243
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:5.93613
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1871393 steal_attempts=582 steal_success=323 empty_loops=259 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.81267
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 10 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:9.53143
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:5.8703
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1871407 steal_attempts=695 steal_success=309 empty_loops=386 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.80891
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 10 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:9.24007
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:5.95878
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1871435 steal_attempts=2563 steal_success=281 empty_loops=2282 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.81768
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 10 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:9.21469
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:5.93776
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1871414 steal_attempts=635 steal_success=302 empty_loops=333 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.81226
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 10 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:9.59077
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:6.01652
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1871339 steal_attempts=893 steal_success=377 empty_loops=516 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.80743
+ (direct: 0.0000s, mutex: 9.3203s, mutex_G: 5.9439s, worksteal: 3.8118s)
+Testing 20 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 20 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:5.24358
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.81239
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1871008 steal_attempts=3595 steal_success=708 empty_loops=2887 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.9472
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 20 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:5.35469
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:4.38455
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1870697 steal_attempts=4874 steal_success=1019 empty_loops=3855 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.9695
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 20 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:5.25521
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.65371
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1871052 steal_attempts=3139 steal_success=664 empty_loops=2475 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.96437
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 20 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:5.29599
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:4.09528
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1871110 steal_attempts=2667 steal_success=606 empty_loops=2061 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.96352
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 20 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:5.28801
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.97623
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1870636 steal_attempts=3423 steal_success=1080 empty_loops=2343 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.95128
+ (direct: 0.0000s, mutex: 5.2875s, mutex_G: 3.9844s, worksteal: 1.9592s)
+Testing 30 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 30 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.38905
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.75975
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1870350 steal_attempts=4889 steal_success=1366 empty_loops=3523 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.32227
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 30 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:4.29703
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.73222
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1870685 steal_attempts=3951 steal_success=1031 empty_loops=2920 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.32825
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 30 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:4.17936
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.53093
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1870298 steal_attempts=5484 steal_success=1418 empty_loops=4066 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.332
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 30 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:4.14871
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.55263
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1870486 steal_attempts=10744 steal_success=1230 empty_loops=9514 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.31678
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 30 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.92676
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.10799
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1870735 steal_attempts=2647 steal_success=981 empty_loops=1666 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.32166
+ (direct: 0.0000s, mutex: 3.9882s, mutex_G: 3.5367s, worksteal: 1.3242s)
+Testing 40 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 40 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:3.61412
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:3.4335
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1869934 steal_attempts=5699 steal_success=1782 empty_loops=3917 tasks_processed=1871716
+worksteal: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:1.11128
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 40 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.16746
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.90025
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1870028 steal_attempts=6160 steal_success=1688 empty_loops=4472 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.06848
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 40 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.16449
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.60315
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1869973 steal_attempts=5930 steal_success=1743 empty_loops=4187 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.13112
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 40 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.54576
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.43555
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1869954 steal_attempts=6032 steal_success=1762 empty_loops=4270 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.03067
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 40 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.08276
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.3428
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1870036 steal_attempts=4654 steal_success=1680 empty_loops=2974 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.07069
+ (direct: 0.0000s, mutex: 3.3149s, mutex_G: 3.3430s, worksteal: 1.0824s)
+Testing 50 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 50 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.01786
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.27604
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1869638 steal_attempts=5912 steal_success=2078 empty_loops=3834 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:0.909577
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 50 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.98985
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.63236
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1869402 steal_attempts=8982 steal_success=2314 empty_loops=6668 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:0.901928
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 50 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.94327
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.92288
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1869235 steal_attempts=5889 steal_success=2481 empty_loops=3408 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:0.951824
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 50 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.07203
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.15171
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1869326 steal_attempts=5276 steal_success=2390 empty_loops=2886 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:0.994206
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 50 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.17031
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.22617
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1869169 steal_attempts=4805 steal_success=2547 empty_loops=2258 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:0.936295
+ (direct: 0.0000s, mutex: 3.0387s, mutex_G: 3.2418s, worksteal: 0.9388s)
+Testing 60 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 60 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.52195
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.73118
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1869654 steal_attempts=10146 steal_success=2062 empty_loops=8084 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.00071
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 60 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.93386
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.23586
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1868707 steal_attempts=8919 steal_success=3009 empty_loops=5910 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:0.925401
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 60 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.87886
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.11953
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1869084 steal_attempts=8710 steal_success=2632 empty_loops=6078 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:0.884687
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 60 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.73018
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.23597
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1868778 steal_attempts=7057 steal_success=2938 empty_loops=4119 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:0.961104
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 60 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.03513
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.16538
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1869440 steal_attempts=7565 steal_success=2276 empty_loops=5289 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:0.892329
+ (direct: 0.0000s, mutex: 2.8200s, mutex_G: 3.0976s, worksteal: 0.9328s)
+Testing 70 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 70 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.8338
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.18667
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1869201 steal_attempts=13735 steal_success=2515 empty_loops=11220 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.0676
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 70 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.66765
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.03309
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1868913 steal_attempts=10244 steal_success=2803 empty_loops=7441 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:0.983037
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 70 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.76784
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.35635
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1869027 steal_attempts=7871 steal_success=2689 empty_loops=5182 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:0.958274
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 70 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.68762
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.6263
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1868892 steal_attempts=11276 steal_success=2824 empty_loops=8452 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.03589
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 70 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.53794
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.83339
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1868570 steal_attempts=12782 steal_success=3146 empty_loops=9636 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:0.900833
+ (direct: 0.0000s, mutex: 2.6990s, mutex_G: 3.2072s, worksteal: 0.9891s)
+Testing 80 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 80 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.78766
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.38148
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1867390 steal_attempts=10484 steal_success=4326 empty_loops=6158 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:0.958532
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 80 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.75111
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.79485
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1868541 steal_attempts=12947 steal_success=3175 empty_loops=9772 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:0.976355
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 80 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.56555
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.82692
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1867632 steal_attempts=13423 steal_success=4084 empty_loops=9339 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:0.96538
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 80 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.74453
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.31296
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1868535 steal_attempts=13272 steal_success=3181 empty_loops=10091 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:0.996409
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 80 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.71648
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.19919
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1868015 steal_attempts=11379 steal_success=3701 empty_loops=7678 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.00766
+ (direct: 0.0000s, mutex: 2.7131s, mutex_G: 3.3031s, worksteal: 0.9809s)
+Testing 90 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 90 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:2.80064
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:3.30016
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1868067 steal_attempts=13989 steal_success=3649 empty_loops=10340 tasks_processed=1871716
+worksteal: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:1.00321
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 90 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.44982
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.61494
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1868021 steal_attempts=14203 steal_success=3695 empty_loops=10508 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:0.95535
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 90 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.83958
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.20683
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1866805 steal_attempts=12473 steal_success=4911 empty_loops=7562 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.04496
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 90 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.68471
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.54753
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1867028 steal_attempts=19749 steal_success=4688 empty_loops=15061 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.09978
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 90 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.50527
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.11312
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1868056 steal_attempts=8756 steal_success=3660 empty_loops=5096 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:0.969711
+ (direct: 0.0000s, mutex: 2.6560s, mutex_G: 3.3565s, worksteal: 1.0146s)
+Testing 100 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 100 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.9606
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.46959
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1866614 steal_attempts=10066 steal_success=5102 empty_loops=4964 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:0.974138
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 100 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.79116
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.22625
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1866841 steal_attempts=9019 steal_success=4875 empty_loops=4144 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.03762
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 100 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.72612
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.316
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1867493 steal_attempts=14620 steal_success=4223 empty_loops=10397 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:0.985234
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 100 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.69139
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.39735
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1867075 steal_attempts=13573 steal_success=4641 empty_loops=8932 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.02916
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 100 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.55434
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.92402
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1867708 steal_attempts=13170 steal_success=4008 empty_loops=9162 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.01002
+ (direct: 0.0000s, mutex: 2.7447s, mutex_G: 3.2666s, worksteal: 1.0072s)
+Testing 110 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 110 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.72541
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.50377
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1867247 steal_attempts=12895 steal_success=4469 empty_loops=8426 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.03126
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 110 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.64272
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.35873
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1868099 steal_attempts=12274 steal_success=3617 empty_loops=8657 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.04969
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 110 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:2.78713
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:3.32031
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1866875 steal_attempts=24206 steal_success=4841 empty_loops=19365 tasks_processed=1871716
+worksteal: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:1.02394
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 110 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.71213
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.22176
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1866709 steal_attempts=11858 steal_success=5007 empty_loops=6851 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.03222
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 110 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.71436
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.24609
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865876 steal_attempts=14073 steal_success=5840 empty_loops=8233 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.04762
+ (direct: 0.0000s, mutex: 2.7164s, mutex_G: 3.3301s, worksteal: 1.0369s)
+Testing 120 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 120 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.41604
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.94467
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1866764 steal_attempts=18346 steal_success=4952 empty_loops=13394 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.09358
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 120 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.68915
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.48094
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1866470 steal_attempts=18971 steal_success=5246 empty_loops=13725 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.0683
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 120 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.57342
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.3857
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1866698 steal_attempts=15159 steal_success=5018 empty_loops=10141 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.1071
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 120 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.40563
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.91934
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1866922 steal_attempts=15270 steal_success=4794 empty_loops=10476 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.06159
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 120 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.81537
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.23472
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865519 steal_attempts=18588 steal_success=6197 empty_loops=12391 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.0807
+ (direct: 0.0000s, mutex: 2.5799s, mutex_G: 3.1931s, worksteal: 1.0823s)
+Testing 130 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 130 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:2.74424
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:3.43573
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1866967 steal_attempts=14574 steal_success=4749 empty_loops=9825 tasks_processed=1871716
+worksteal: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:1.07158
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 130 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.66104
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.41223
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1866318 steal_attempts=22055 steal_success=5398 empty_loops=16657 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.08227
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 130 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.75507
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.63357
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865292 steal_attempts=22854 steal_success=6424 empty_loops=16430 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.06368
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 130 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.74262
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.3938
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1866564 steal_attempts=19986 steal_success=5152 empty_loops=14834 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.06304
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 130 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.58995
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.75072
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1867108 steal_attempts=18609 steal_success=4608 empty_loops=14001 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.10887
+ (direct: 0.0000s, mutex: 2.6986s, mutex_G: 3.5252s, worksteal: 1.0779s)
+Testing 140 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 140 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:2.5508
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:3.08332
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1863671 steal_attempts=28597 steal_success=8045 empty_loops=20552 tasks_processed=1871716
+worksteal: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:1.12392
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 140 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.52779
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.19314
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1866562 steal_attempts=23416 steal_success=5154 empty_loops=18262 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.09446
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 140 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.75075
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.69183
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1867173 steal_attempts=21495 steal_success=4543 empty_loops=16952 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.11974
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 140 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.48257
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.06267
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865518 steal_attempts=18547 steal_success=6198 empty_loops=12349 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.16206
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 140 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:2.74819
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:3.46651
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1866017 steal_attempts=21464 steal_success=5699 empty_loops=15765 tasks_processed=1871716
+worksteal: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:1.10222
+ (direct: 0.0000s, mutex: 2.6120s, mutex_G: 3.2995s, worksteal: 1.1205s)
+Testing 150 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 150 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.68029
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.44003
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865808 steal_attempts=19584 steal_success=5908 empty_loops=13676 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.12812
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 150 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.75285
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.89148
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865450 steal_attempts=16888 steal_success=6266 empty_loops=10622 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.14495
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 150 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.9413
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.6647
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1866524 steal_attempts=24820 steal_success=5192 empty_loops=19628 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.08972
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 150 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.65124
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.39388
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865888 steal_attempts=15776 steal_success=5828 empty_loops=9948 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.10124
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 150 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.68189
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.48522
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865823 steal_attempts=21680 steal_success=5893 empty_loops=15787 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.09952
+ (direct: 0.0000s, mutex: 2.7415s, mutex_G: 3.5751s, worksteal: 1.1127s)
+Testing 160 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 160 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.5902
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.18736
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1866197 steal_attempts=23496 steal_success=5519 empty_loops=17977 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.16535
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 160 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.64855
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.45374
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865949 steal_attempts=21635 steal_success=5767 empty_loops=15868 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.11824
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 160 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.68508
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:4.00271
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1866039 steal_attempts=22710 steal_success=5677 empty_loops=17033 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.11248
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 160 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.82145
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.47901
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865763 steal_attempts=13178 steal_success=5953 empty_loops=7225 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.12199
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 160 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.8154
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.633
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1864980 steal_attempts=13377 steal_success=6736 empty_loops=6641 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.08752
+ (direct: 0.0000s, mutex: 2.7121s, mutex_G: 3.5512s, worksteal: 1.1211s)
+Testing 170 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 170 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.63939
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.23617
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1864943 steal_attempts=15872 steal_success=6773 empty_loops=9099 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.18341
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 170 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.63492
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.41837
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865023 steal_attempts=18619 steal_success=6693 empty_loops=11926 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.15544
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 170 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.89617
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.57587
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865827 steal_attempts=26585 steal_success=5889 empty_loops=20696 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.13825
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 170 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.77485
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.96022
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865270 steal_attempts=28225 steal_success=6446 empty_loops=21779 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.1856
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 170 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:2.79775
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:3.48488
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1866472 steal_attempts=26047 steal_success=5244 empty_loops=20803 tasks_processed=1871716
+worksteal: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:1.13249
+ (direct: 0.0000s, mutex: 2.7486s, mutex_G: 3.5351s, worksteal: 1.1590s)
+Testing 180 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 180 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:2.75036
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:3.66954
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1864553 steal_attempts=23304 steal_success=7163 empty_loops=16141 tasks_processed=1871716
+worksteal: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:1.15146
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 180 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.58743
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.26136
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1864446 steal_attempts=24894 steal_success=7270 empty_loops=17624 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.12296
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 180 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.74471
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.43992
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1864647 steal_attempts=26738 steal_success=7069 empty_loops=19669 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.19627
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 180 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.85934
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.3613
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1863120 steal_attempts=13429 steal_success=8596 empty_loops=4833 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.2096
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 180 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.62425
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.37643
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865988 steal_attempts=22959 steal_success=5728 empty_loops=17231 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.14256
+ (direct: 0.0000s, mutex: 2.7132s, mutex_G: 3.4217s, worksteal: 1.1646s)
+Testing 190 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 190 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.68635
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.54908
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1864971 steal_attempts=23579 steal_success=6745 empty_loops=16834 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.10687
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 190 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.73431
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.49483
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1864107 steal_attempts=25705 steal_success=7609 empty_loops=18096 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.12062
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 190 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.80959
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:4.12233
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1864883 steal_attempts=21837 steal_success=6833 empty_loops=15004 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.14365
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 190 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.78019
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:4.01973
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1864793 steal_attempts=18467 steal_success=6923 empty_loops=11544 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.17735
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 190 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.69239
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.33005
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865437 steal_attempts=20181 steal_success=6279 empty_loops=13902 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.10988
+ (direct: 0.0000s, mutex: 2.7406s, mutex_G: 3.7032s, worksteal: 1.1317s)
+Testing 200 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 200 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:2.9022
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:3.70399
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865435 steal_attempts=13509 steal_success=6281 empty_loops=7228 tasks_processed=1871716
+worksteal: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:1.15465
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 200 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.8839
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.995
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1866210 steal_attempts=36666 steal_success=5506 empty_loops=31160 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.14577
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 200 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.72637
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.56245
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1864756 steal_attempts=19320 steal_success=6960 empty_loops=12360 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.08824
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 200 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.71164
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.65559
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1864023 steal_attempts=29464 steal_success=7693 empty_loops=21771 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.16982
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 200 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.86691
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.63635
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865992 steal_attempts=26714 steal_success=5724 empty_loops=20990 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.11446
+ (direct: 0.0000s, mutex: 2.8182s, mutex_G: 3.7107s, worksteal: 1.1346s)
+Testing 210 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 210 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.84132
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.69301
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1864970 steal_attempts=17575 steal_success=6746 empty_loops=10829 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.08965
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 210 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:2.83201
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:3.53642
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865168 steal_attempts=25313 steal_success=6548 empty_loops=18765 tasks_processed=1871716
+worksteal: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:1.12149
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 210 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.69832
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.56741
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865882 steal_attempts=19383 steal_success=5834 empty_loops=13549 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.13742
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 210 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.81468
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:4.14858
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865219 steal_attempts=21606 steal_success=6497 empty_loops=15109 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.10597
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 210 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.81962
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.39983
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1866490 steal_attempts=26861 steal_success=5226 empty_loops=21635 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.15457
+ (direct: 0.0000s, mutex: 2.8012s, mutex_G: 3.6690s, worksteal: 1.1218s)
+Testing 220 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 220 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.91816
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:4.25894
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865358 steal_attempts=21176 steal_success=6358 empty_loops=14818 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.11038
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 220 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.07985
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:4.43087
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865434 steal_attempts=20427 steal_success=6282 empty_loops=14145 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.0968
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 220 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:2.81234
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:3.40766
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865775 steal_attempts=21608 steal_success=5941 empty_loops=15667 tasks_processed=1871716
+worksteal: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:1.11168
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 220 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:3.0974
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:3.52006
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1863663 steal_attempts=23289 steal_success=8053 empty_loops=15236 tasks_processed=1871716
+worksteal: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:1.1061
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 220 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.82776
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.65754
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1863869 steal_attempts=16020 steal_success=7847 empty_loops=8173 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.17053
+ (direct: 0.0000s, mutex: 2.9471s, mutex_G: 3.8550s, worksteal: 1.1191s)
+Testing 230 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 230 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.8841
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.74256
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1864348 steal_attempts=20926 steal_success=7368 empty_loops=13558 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.17197
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 230 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.7922
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.68725
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1864919 steal_attempts=19016 steal_success=6797 empty_loops=12219 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.1451
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 230 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.88908
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:4.08781
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1863453 steal_attempts=45895 steal_success=8263 empty_loops=37632 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.19101
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 230 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:2.89336
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:3.6942
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1863470 steal_attempts=25248 steal_success=8246 empty_loops=17002 tasks_processed=1871716
+worksteal: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:1.14346
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 230 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.09537
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.66465
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1864860 steal_attempts=20866 steal_success=6856 empty_loops=14010 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.18518
+ (direct: 0.0000s, mutex: 2.9108s, mutex_G: 3.7753s, worksteal: 1.1673s)
+Testing 240 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 240 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:2.97041
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:3.47292
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1866197 steal_attempts=22457 steal_success=5519 empty_loops=16938 tasks_processed=1871716
+worksteal: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:1.13224
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 240 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.90792
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.70348
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865002 steal_attempts=24929 steal_success=6714 empty_loops=18215 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.15119
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 240 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.82478
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.55467
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1864636 steal_attempts=29471 steal_success=7080 empty_loops=22391 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.14444
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 240 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.90989
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:4.15547
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1864753 steal_attempts=18965 steal_success=6963 empty_loops=12002 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.09876
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 240 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.76219
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.44697
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865521 steal_attempts=18488 steal_success=6195 empty_loops=12293 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.136
+ (direct: 0.0000s, mutex: 2.8750s, mutex_G: 3.6667s, worksteal: 1.1325s)
+Testing 250 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 250 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:3.19268
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:4.2239
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1863425 steal_attempts=23976 steal_success=8291 empty_loops=15685 tasks_processed=1871716
+worksteal: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:1.17614
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 250 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.9258
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:4.03866
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1866193 steal_attempts=28637 steal_success=5523 empty_loops=23114 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.11443
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 250 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:2.88161
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:3.84201
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1864663 steal_attempts=18310 steal_success=7053 empty_loops=11257 tasks_processed=1871716
+worksteal: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:1.13827
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 250 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.7196
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.46963
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1863928 steal_attempts=20414 steal_success=7788 empty_loops=12626 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.2087
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 250 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.84586
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.60936
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1865712 steal_attempts=31598 steal_success=6004 empty_loops=25594 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.20445
+ (direct: 0.0000s, mutex: 2.9131s, mutex_G: 3.8367s, worksteal: 1.1684s)
+Testing 256 threads...   Skipping direct method
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 256 --cutoff 8 --skip-direct --quiet
+run n°1.
+Sortie run 1:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.84156
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.84243
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1864735 steal_attempts=21404 steal_success=6981 empty_loops=14423 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.18298
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 256 --cutoff 8 --skip-direct --quiet
+run n°2.
+Sortie run 2:
+Running mutex-based parallel...
+mutex: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:2.81905
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:3.49044
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1863776 steal_attempts=32574 steal_success=7940 empty_loops=24634 tasks_processed=1871716
+worksteal: {3171: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 13, 9, 0} t:1.17309
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 256 --cutoff 8 --skip-direct --quiet
+run n°3.
+Sortie run 3:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.88666
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.49765
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1864934 steal_attempts=19314 steal_success=6782 empty_loops=12532 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.17579
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 256 --cutoff 8 --skip-direct --quiet
+run n°4.
+Sortie run 4:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:2.81876
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.53218
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1863294 steal_attempts=35932 steal_success=8422 empty_loops=27510 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.19586
+
+ Commande: ../tsp ../dj38.tsp --cities 15 --threads 256 --cutoff 8 --skip-direct --quiet
+run n°5.
+Sortie run 5:
+Running mutex-based parallel...
+mutex: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:3.24856
+Running mutex-based Gaspard parallel...
+mutex_G: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:4.15055
+Running work-stealing parallel...
+WS stats: pushes=1871715 pops=1864609 steal_attempts=28931 steal_success=7107 empty_loops=21824 tasks_processed=1871716
+worksteal: {3171: 0, 9, 13, 14, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:1.18468
+ (direct: 0.0000s, mutex: 2.9229s, mutex_G: 3.7026s, worksteal: 1.1825s)
+
+ Résultats Thread Scaling:
+Threads    Mutex (s)    WorkSteal (s) Speedup M    Speedup WS  
+------------------------------------------------------------
+1          52.671440    37.934860    1.00        x 1.00        x
+10         9.320252     3.811790     5.65        x 9.95        x
+20         5.287496     1.959174     9.96        x 19.36       x
+30         3.988182     1.324192     13.21       x 28.65       x
+40         3.314918     1.082448     15.89       x 35.05       x
+50         3.038664     0.938766     17.33       x 40.41       x
+60         2.819996     0.932846     18.68       x 40.67       x
+70         2.698970     0.989127     19.52       x 38.35       x
+80         2.713066     0.980867     19.41       x 38.67       x
+90         2.656004     1.014602     19.83       x 37.39       x
+100        2.744722     1.007234     19.19       x 37.66       x
+110        2.716350     1.036946     19.39       x 36.58       x
+120        2.579922     1.082254     20.42       x 35.05       x
+130        2.698584     1.077888     19.52       x 35.19       x
+140        2.612020     1.120480     20.17       x 33.86       x
+150        2.741514     1.112710     19.21       x 34.09       x
+160        2.712136     1.121116     19.42       x 33.84       x
+170        2.748616     1.159038     19.16       x 32.73       x
+180        2.713218     1.164570     19.41       x 32.57       x
+190        2.740566     1.131674     19.22       x 33.52       x
+200        2.818204     1.134588     18.69       x 33.43       x
+210        2.801190     1.121820     18.80       x 33.82       x
+220        2.947102     1.119098     17.87       x 33.90       x
+230        2.910822     1.167344     18.10       x 32.50       x
+240        2.875038     1.132526     18.32       x 33.50       x
+250        2.913110     1.168398     18.08       x 32.47       x
+256        2.922918     1.182480     18.02       x 32.08       x
+
+ Tous les résultats sauvegardés dans benchmark_complete.json
+rafael@phi-2:~/pcm-projet/threaded_lockfree/benchmark$ 
+

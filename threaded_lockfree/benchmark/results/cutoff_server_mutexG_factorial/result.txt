@@ -1,0 +1,534 @@
+rafael@phi-2:~/pcm-projet/threaded_lockfree/benchmark$ make bench-cutoff
+  Running cutoff impact benchmark...
+
+================================================================================
+  TEST 2: IMPACT DU CUTOFF
+================================================================================
+
+Testing cutoff=1...   Skipping direct method
+  Skipping mutex method
+  Skipping mutex Gaspard method
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 1 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°1.
+Sortie run 1:
+Running work-stealing parallel...
+WS stats: pushes=126953011 pops=126948846 steal_attempts=6457 steal_success=4166 empty_loops=2291 tasks_processed=126953012
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:56.3297
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 1 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°2.
+Sortie run 2:
+Running work-stealing parallel...
+WS stats: pushes=121727625 pops=121723415 steal_attempts=6067 steal_success=4211 empty_loops=1856 tasks_processed=121727626
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:54.3631
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 1 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°3.
+Sortie run 3:
+Running work-stealing parallel...
+WS stats: pushes=122153602 pops=122149429 steal_attempts=6254 steal_success=4174 empty_loops=2080 tasks_processed=122153603
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:55.1572
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 1 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°4.
+Sortie run 4:
+Running work-stealing parallel...
+WS stats: pushes=121918740 pops=121915114 steal_attempts=5784 steal_success=3627 empty_loops=2157 tasks_processed=121918741
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:55.5988
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 1 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°5.
+Sortie run 5:
+Running work-stealing parallel...
+WS stats: pushes=121554120 pops=121550392 steal_attempts=5910 steal_success=3729 empty_loops=2181 tasks_processed=121554121
+worksteal: {3161: 0, 9, 13, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:54.3848
+ (worksteal: 55.1667s)
+Testing cutoff=2...   Skipping direct method
+  Skipping mutex method
+  Skipping mutex Gaspard method
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 2 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°1.
+Sortie run 1:
+Running work-stealing parallel...
+WS stats: pushes=115256164 pops=115251606 steal_attempts=7420 steal_success=4559 empty_loops=2861 tasks_processed=115256165
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:51.8343
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 2 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°2.
+Sortie run 2:
+Running work-stealing parallel...
+WS stats: pushes=113458118 pops=113453445 steal_attempts=7641 steal_success=4674 empty_loops=2967 tasks_processed=113458119
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:51.5491
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 2 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°3.
+Sortie run 3:
+Running work-stealing parallel...
+WS stats: pushes=114729773 pops=114725817 steal_attempts=5748 steal_success=3957 empty_loops=1791 tasks_processed=114729774
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:52.1146
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 2 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°4.
+Sortie run 4:
+Running work-stealing parallel...
+WS stats: pushes=114652102 pops=114648029 steal_attempts=6253 steal_success=4074 empty_loops=2179 tasks_processed=114652103
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:51.3293
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 2 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°5.
+Sortie run 5:
+Running work-stealing parallel...
+WS stats: pushes=113198186 pops=113194177 steal_attempts=5837 steal_success=4010 empty_loops=1827 tasks_processed=113198187
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:50.8156
+ (worksteal: 51.5286s)
+Testing cutoff=3...   Skipping direct method
+  Skipping mutex method
+  Skipping mutex Gaspard method
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 3 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°1.
+Sortie run 1:
+Running work-stealing parallel...
+WS stats: pushes=86771229 pops=86767363 steal_attempts=5630 steal_success=3867 empty_loops=1763 tasks_processed=86771230
+worksteal: {3161: 0, 9, 13, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:38.8629
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 3 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°2.
+Sortie run 2:
+Running work-stealing parallel...
+WS stats: pushes=86777067 pops=86772797 steal_attempts=6307 steal_success=4271 empty_loops=2036 tasks_processed=86777068
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:39.334
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 3 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°3.
+Sortie run 3:
+Running work-stealing parallel...
+WS stats: pushes=86781049 pops=86776859 steal_attempts=6074 steal_success=4191 empty_loops=1883 tasks_processed=86781050
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:39.2323
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 3 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°4.
+Sortie run 4:
+Running work-stealing parallel...
+WS stats: pushes=86931855 pops=86928265 steal_attempts=5572 steal_success=3591 empty_loops=1981 tasks_processed=86931856
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:39.1462
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 3 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°5.
+Sortie run 5:
+Running work-stealing parallel...
+WS stats: pushes=86930383 pops=86926602 steal_attempts=5738 steal_success=3782 empty_loops=1956 tasks_processed=86930384
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:39.7394
+ (worksteal: 39.2630s)
+Testing cutoff=4...   Skipping direct method
+  Skipping mutex method
+  Skipping mutex Gaspard method
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 4 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°1.
+Sortie run 1:
+Running work-stealing parallel...
+WS stats: pushes=47885604 pops=47881889 steal_attempts=5760 steal_success=3716 empty_loops=2044 tasks_processed=47885605
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:21.5755
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 4 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°2.
+Sortie run 2:
+Running work-stealing parallel...
+WS stats: pushes=49804811 pops=49801868 steal_attempts=20872 steal_success=2944 empty_loops=17928 tasks_processed=49804812
+worksteal: {3161: 0, 9, 13, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:22.7309
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 4 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°3.
+Sortie run 3:
+Running work-stealing parallel...
+WS stats: pushes=48254185 pops=48249776 steal_attempts=18982 steal_success=4410 empty_loops=14572 tasks_processed=48254186
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:21.5885
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 4 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°4.
+Sortie run 4:
+Running work-stealing parallel...
+WS stats: pushes=48125269 pops=48121640 steal_attempts=5680 steal_success=3630 empty_loops=2050 tasks_processed=48125270
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:22.4666
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 4 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°5.
+Sortie run 5:
+Running work-stealing parallel...
+WS stats: pushes=48363554 pops=48360917 steal_attempts=21102 steal_success=2638 empty_loops=18464 tasks_processed=48363555
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:21.6819
+ (worksteal: 22.0087s)
+Testing cutoff=5...   Skipping direct method
+  Skipping mutex method
+  Skipping mutex Gaspard method
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 5 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°1.
+Sortie run 1:
+Running work-stealing parallel...
+WS stats: pushes=18696359 pops=18692967 steal_attempts=12132 steal_success=3393 empty_loops=8739 tasks_processed=18696360
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:8.70209
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 5 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°2.
+Sortie run 2:
+Running work-stealing parallel...
+WS stats: pushes=19306698 pops=19303488 steal_attempts=6480 steal_success=3211 empty_loops=3269 tasks_processed=19306699
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:9.14003
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 5 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°3.
+Sortie run 3:
+Running work-stealing parallel...
+WS stats: pushes=18498820 pops=18495331 steal_attempts=5259 steal_success=3490 empty_loops=1769 tasks_processed=18498821
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:8.54139
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 5 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°4.
+Sortie run 4:
+Running work-stealing parallel...
+WS stats: pushes=18485922 pops=18482432 steal_attempts=8147 steal_success=3491 empty_loops=4656 tasks_processed=18485923
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:8.85681
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 5 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°5.
+Sortie run 5:
+Running work-stealing parallel...
+WS stats: pushes=18643693 pops=18640347 steal_attempts=5135 steal_success=3347 empty_loops=1788 tasks_processed=18643694
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:8.69764
+ (worksteal: 8.7876s)
+Testing cutoff=6...   Skipping direct method
+  Skipping mutex method
+  Skipping mutex Gaspard method
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 6 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°1.
+Sortie run 1:
+Running work-stealing parallel...
+WS stats: pushes=5112970 pops=5110030 steal_attempts=5162 steal_success=2941 empty_loops=2221 tasks_processed=5112971
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:2.74801
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 6 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°2.
+Sortie run 2:
+Running work-stealing parallel...
+WS stats: pushes=5117966 pops=5115454 steal_attempts=4152 steal_success=2513 empty_loops=1639 tasks_processed=5117967
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:2.79704
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 6 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°3.
+Sortie run 3:
+Running work-stealing parallel...
+WS stats: pushes=5111189 pops=5108590 steal_attempts=4294 steal_success=2600 empty_loops=1694 tasks_processed=5111190
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:2.63504
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 6 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°4.
+Sortie run 4:
+Running work-stealing parallel...
+WS stats: pushes=5111097 pops=5108299 steal_attempts=4737 steal_success=2799 empty_loops=1938 tasks_processed=5111098
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:2.76612
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 6 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°5.
+Sortie run 5:
+Running work-stealing parallel...
+WS stats: pushes=5113237 pops=5110322 steal_attempts=4137 steal_success=2916 empty_loops=1221 tasks_processed=5113238
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:2.74772
+ (worksteal: 2.7388s)
+Testing cutoff=7...   Skipping direct method
+  Skipping mutex method
+  Skipping mutex Gaspard method
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 7 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°1.
+Sortie run 1:
+Running work-stealing parallel...
+WS stats: pushes=1057785 pops=1055441 steal_attempts=3666 steal_success=2345 empty_loops=1321 tasks_processed=1057786
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:0.509862
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 7 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°2.
+Sortie run 2:
+Running work-stealing parallel...
+WS stats: pushes=1048794 pops=1046800 steal_attempts=6347 steal_success=1995 empty_loops=4352 tasks_processed=1048795
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:0.590052
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 7 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°3.
+Sortie run 3:
+Running work-stealing parallel...
+WS stats: pushes=1063026 pops=1060883 steal_attempts=3462 steal_success=2144 empty_loops=1318 tasks_processed=1063027
+worksteal: {3161: 0, 9, 13, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:0.528038
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 7 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°4.
+Sortie run 4:
+Running work-stealing parallel...
+WS stats: pushes=1057869 pops=1055691 steal_attempts=3507 steal_success=2179 empty_loops=1328 tasks_processed=1057870
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:0.537888
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 7 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°5.
+Sortie run 5:
+Running work-stealing parallel...
+WS stats: pushes=1045486 pops=1043306 steal_attempts=3442 steal_success=2181 empty_loops=1261 tasks_processed=1045487
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:0.516935
+ (worksteal: 0.5366s)
+Testing cutoff=8...   Skipping direct method
+  Skipping mutex method
+  Skipping mutex Gaspard method
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 8 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°1.
+Sortie run 1:
+Running work-stealing parallel...
+WS stats: pushes=159341 pops=157881 steal_attempts=8015 steal_success=1461 empty_loops=6554 tasks_processed=159342
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:0.141422
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 8 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°2.
+Sortie run 2:
+Running work-stealing parallel...
+WS stats: pushes=160214 pops=158694 steal_attempts=9139 steal_success=1521 empty_loops=7618 tasks_processed=160215
+worksteal: {3161: 0, 9, 13, 12, 11, 10, 8, 7, 6, 5, 4, 2, 3, 1, 0} t:0.143048
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 8 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°3.
+Sortie run 3:
+Running work-stealing parallel...
+WS stats: pushes=159143 pops=157454 steal_attempts=16835 steal_success=1690 empty_loops=15145 tasks_processed=159144
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:0.13851
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 8 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°4.
+Sortie run 4:
+Running work-stealing parallel...
+WS stats: pushes=159170 pops=157300 steal_attempts=8515 steal_success=1871 empty_loops=6644 tasks_processed=159171
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:0.138108
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 8 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°5.
+Sortie run 5:
+Running work-stealing parallel...
+WS stats: pushes=159359 pops=157930 steal_attempts=18943 steal_success=1430 empty_loops=17513 tasks_processed=159360
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:0.141768
+ (worksteal: 0.1406s)
+Testing cutoff=9...   Skipping direct method
+  Skipping mutex method
+  Skipping mutex Gaspard method
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 9 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°1.
+Sortie run 1:
+Running work-stealing parallel...
+WS stats: pushes=18815 pops=17595 steal_attempts=162648 steal_success=1221 empty_loops=161427 tasks_processed=18816
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:0.169436
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 9 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°2.
+Sortie run 2:
+Running work-stealing parallel...
+WS stats: pushes=18815 pops=17833 steal_attempts=173135 steal_success=983 empty_loops=172152 tasks_processed=18816
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:0.168444
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 9 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°3.
+Sortie run 3:
+Running work-stealing parallel...
+WS stats: pushes=18815 pops=17447 steal_attempts=161181 steal_success=1369 empty_loops=159812 tasks_processed=18816
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:0.165437
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 9 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°4.
+Sortie run 4:
+Running work-stealing parallel...
+WS stats: pushes=18815 pops=17755 steal_attempts=164178 steal_success=1061 empty_loops=163117 tasks_processed=18816
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:0.18225
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 9 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°5.
+Sortie run 5:
+Running work-stealing parallel...
+WS stats: pushes=18815 pops=17742 steal_attempts=129630 steal_success=1074 empty_loops=128556 tasks_processed=18816
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:0.15211
+ (worksteal: 0.1675s)
+Testing cutoff=10...   Skipping direct method
+  Skipping mutex method
+  Skipping mutex Gaspard method
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 10 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°1.
+Sortie run 1:
+Running work-stealing parallel...
+WS stats: pushes=1885 pops=1319 steal_attempts=747526 steal_success=567 empty_loops=746959 tasks_processed=1886
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:0.258525
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 10 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°2.
+Sortie run 2:
+Running work-stealing parallel...
+WS stats: pushes=1885 pops=1373 steal_attempts=1008320 steal_success=513 empty_loops=1007807 tasks_processed=1886
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:0.295076
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 10 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°3.
+Sortie run 3:
+Running work-stealing parallel...
+WS stats: pushes=1885 pops=1362 steal_attempts=729531 steal_success=524 empty_loops=729007 tasks_processed=1886
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:0.257672
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 10 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°4.
+Sortie run 4:
+Running work-stealing parallel...
+WS stats: pushes=1885 pops=1333 steal_attempts=779995 steal_success=553 empty_loops=779442 tasks_processed=1886
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:0.265596
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 10 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°5.
+Sortie run 5:
+Running work-stealing parallel...
+WS stats: pushes=1885 pops=1369 steal_attempts=806856 steal_success=517 empty_loops=806339 tasks_processed=1886
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:0.267705
+ (worksteal: 0.2689s)
+Testing cutoff=11...   Skipping direct method
+  Skipping mutex method
+  Skipping mutex Gaspard method
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 11 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°1.
+Sortie run 1:
+Running work-stealing parallel...
+WS stats: pushes=169 pops=38 steal_attempts=2522575 steal_success=132 empty_loops=2522443 tasks_processed=170
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:0.535219
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 11 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°2.
+Sortie run 2:
+Running work-stealing parallel...
+WS stats: pushes=169 pops=41 steal_attempts=2612781 steal_success=129 empty_loops=2612652 tasks_processed=170
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:0.543655
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 11 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°3.
+Sortie run 3:
+Running work-stealing parallel...
+WS stats: pushes=169 pops=48 steal_attempts=2592307 steal_success=122 empty_loops=2592185 tasks_processed=170
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:0.549486
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 11 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°4.
+Sortie run 4:
+Running work-stealing parallel...
+WS stats: pushes=169 pops=47 steal_attempts=2573682 steal_success=123 empty_loops=2573559 tasks_processed=170
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:0.537293
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 11 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°5.
+Sortie run 5:
+Running work-stealing parallel...
+WS stats: pushes=169 pops=49 steal_attempts=2520703 steal_success=121 empty_loops=2520582 tasks_processed=170
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:0.525959
+ (worksteal: 0.5383s)
+Testing cutoff=12...   Skipping direct method
+  Skipping mutex method
+  Skipping mutex Gaspard method
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 12 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°1.
+Sortie run 1:
+Running work-stealing parallel...
+WS stats: pushes=13 pops=2 steal_attempts=18953134 steal_success=12 empty_loops=18953122 tasks_processed=14
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:3.05167
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 12 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°2.
+Sortie run 2:
+Running work-stealing parallel...
+WS stats: pushes=13 pops=2 steal_attempts=18668087 steal_success=12 empty_loops=18668075 tasks_processed=14
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:3.01395
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 12 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°3.
+Sortie run 3:
+Running work-stealing parallel...
+WS stats: pushes=13 pops=2 steal_attempts=18925074 steal_success=12 empty_loops=18925062 tasks_processed=14
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:3.04999
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 12 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°4.
+Sortie run 4:
+Running work-stealing parallel...
+WS stats: pushes=13 pops=2 steal_attempts=19815036 steal_success=12 empty_loops=19815024 tasks_processed=14
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:3.18343
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 12 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°5.
+Sortie run 5:
+Running work-stealing parallel...
+WS stats: pushes=13 pops=2 steal_attempts=18962917 steal_success=12 empty_loops=18962905 tasks_processed=14
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:3.05324
+ (worksteal: 3.0705s)
+Testing cutoff=13...   Skipping direct method
+  Skipping mutex method
+  Skipping mutex Gaspard method
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 13 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°1.
+Sortie run 1:
+Running work-stealing parallel...
+WS stats: pushes=0 pops=1 steal_attempts=222392024 steal_success=0 empty_loops=222392024 tasks_processed=1
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:34.8531
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 13 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°2.
+Sortie run 2:
+Running work-stealing parallel...
+WS stats: pushes=0 pops=1 steal_attempts=210039682 steal_success=0 empty_loops=210039682 tasks_processed=1
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:32.8223
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 13 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°3.
+Sortie run 3:
+Running work-stealing parallel...
+WS stats: pushes=0 pops=1 steal_attempts=90847886 steal_success=0 empty_loops=90847886 tasks_processed=1
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:19.5885
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 13 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°4.
+Sortie run 4:
+Running work-stealing parallel...
+WS stats: pushes=0 pops=1 steal_attempts=71325660 steal_success=0 empty_loops=71325660 tasks_processed=1
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:16.8077
+
+ Commande: ../tsp ../dj14.tsp --cities 14 --threads 60 --cutoff 13 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°5.
+Sortie run 5:
+Running work-stealing parallel...
+WS stats: pushes=0 pops=1 steal_attempts=204011629 steal_success=0 empty_loops=204011629 tasks_processed=1
+worksteal: {3161: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 9, 0} t:31.9107
+ (worksteal: 27.1965s)
+
+Résultats Impact Cutoff:
+Cities: 14
+Cutoff          Direct (s)   Mutex (s)    WorkSteal (s)
+-------------------------------------------------------
+cutoff_1        0.000000     0.000000     55.166720   
+cutoff_10       0.000000     0.000000     0.268915    
+cutoff_11       0.000000     0.000000     0.538322    
+cutoff_12       0.000000     0.000000     3.070456    
+cutoff_13       0.000000     0.000000     27.196460   
+cutoff_2        0.000000     0.000000     51.528580   
+cutoff_3        0.000000     0.000000     39.262960   
+cutoff_4        0.000000     0.000000     22.008680   
+cutoff_5        0.000000     0.000000     8.787592    
+cutoff_6        0.000000     0.000000     2.738786    
+cutoff_7        0.000000     0.000000     0.536555    
+cutoff_8        0.000000     0.000000     0.140571    
+cutoff_9        0.000000     0.000000     0.167535    
+
+ Tous les résultats sauvegardés dans benchmark_complete.json

@@ -1,0 +1,79 @@
+FAILED AT 18 cities! Rempli la RAM
+
+
+rafael@phi-2:~/pcm-projet/threaded_lockfree/benchmark$ make bench-scalability
+ Running scalability benchmark...
+
+================================================================================
+ TEST 1: SCALABILITÉ (Impact du nombre de villes)
+================================================================================
+
+  ../dj16.tsp not found, using ../dj38.tsp
+Testing 16 cities...   Skipping direct method
+  Skipping mutex method
+  Skipping mutex Gaspard method
+
+ Commande: ../tsp ../dj38.tsp --cities 16 --threads 60 --cutoff 8 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°1.
+Sortie run 1:
+Running work-stealing parallel...
+WS stats: pushes=20223322 pops=20220325 steal_attempts=4719 steal_success=2998 empty_loops=1721 tasks_processed=20223323
+worksteal: {3226: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 15, 12, 14, 13, 9, 0} t:10.3718
+
+ Commande: ../tsp ../dj38.tsp --cities 16 --threads 60 --cutoff 8 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°2.
+Sortie run 2:
+Running work-stealing parallel...
+WS stats: pushes=20179388 pops=20175949 steal_attempts=7687 steal_success=3440 empty_loops=4247 tasks_processed=20179389
+worksteal: {3226: 0, 1, 3, 2, 4, 5, 6, 7, 8, 10, 11, 15, 12, 14, 13, 9, 0} t:10.1234
+ (direct: 0.0000s, worksteal: 10.2476s)
+  ../dj17.tsp not found, using ../dj38.tsp
+Testing 17 cities...   Skipping direct method
+  Skipping mutex method
+  Skipping mutex Gaspard method
+
+ Commande: ../tsp ../dj38.tsp --cities 17 --threads 60 --cutoff 8 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°1.
+Sortie run 1:
+Running work-stealing parallel...
+WS stats: pushes=204512346 pops=204507874 steal_attempts=9531 steal_success=4473 empty_loops=5058 tasks_processed=204512347
+worksteal: {3249: 0, 1, 3, 2, 4, 5, 6, 7, 8, 11, 10, 16, 15, 12, 14, 13, 9, 0} t:93.0252
+
+ Commande: ../tsp ../dj38.tsp --cities 17 --threads 60 --cutoff 8 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°2.
+Sortie run 2:
+Running work-stealing parallel...
+WS stats: pushes=203777665 pops=203773811 steal_attempts=11758 steal_success=3855 empty_loops=7903 tasks_processed=203777666
+worksteal: {3249: 0, 1, 3, 2, 4, 5, 6, 7, 8, 11, 10, 16, 15, 12, 14, 13, 9, 0} t:93.4099
+ (direct: 0.0000s, worksteal: 93.2175s)
+  ../dj18.tsp not found, using ../dj38.tsp
+Testing 18 cities...   Skipping direct method
+  Skipping mutex method
+  Skipping mutex Gaspard method
+
+ Commande: ../tsp ../dj38.tsp --cities 18 --threads 60 --cutoff 8 --skip-direct --skip-mutex --skip-mutex_Gasp --quiet
+run n°1.
+^CTraceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/rafael/pcm-projet/threaded_lockfree/benchmark/benchmark_complete.py", line 130, in test_scalability
+    stats = self.run_test(tsp_file, cities=cities, threads=60, cutoff=8, skip_direct=True, skip_mutex=True, skip_mutex_Gasp=True)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/rafael/pcm-projet/threaded_lockfree/benchmark/benchmark_complete.py", line 61, in run_test
+    result = subprocess.run(cmd, capture_output=True, text=True,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 550, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 1209, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 2115, in _communicate
+    ready = selector.select(timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/selectors.py", line 415, in select
+    fd_event_list = self._selector.poll(timeout)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+make: *** [Makefile:56: bench-scalability] Interrupt
+
+rafael@phi-2:~/pcm-projet/threa
