@@ -8,9 +8,9 @@
 
 /*****************************************************************
   Program to solve a TSP problem with benchmarking capabilities
-  
+
   Usage: tsp <file.tsp> [options]
-  
+
   Options:
     --cities N          : Resize graph to N cities
     --threads N         : Number of threads (default: hardware_concurrency)
@@ -21,8 +21,9 @@
     --skip-worksteal    : Skip work-stealing runner
  *****************************************************************/
 
-struct Config {
-    const char* filename = nullptr;
+struct Config
+{
+    const char *filename = nullptr;
     int num_cities = -1;  // -1 = use file size
     int num_threads = -1; // -1 = use hardware_concurrency
     int cutoff = 5;
@@ -34,7 +35,8 @@ struct Config {
     bool run_partitioned = true;
 };
 
-void print_usage(const char* prog) {
+void print_usage(const char *prog)
+{
     std::cerr << "Usage: " << prog << " <file.tsp> [options]\n";
     std::cerr << "\nOptions:\n";
     std::cerr << "  --cities N        : Resize graph to N cities\n";
@@ -47,125 +49,149 @@ void print_usage(const char* prog) {
     std::cerr << "  --skip-mutex_fact : Skip mutex factorial runner\n";
 }
 
-Config parse_args(int argc, char** argv) {
+Config parse_args(int argc, char **argv)
+{
     Config config;
-    
-    if (argc < 2) {
+
+    if (argc < 2)
+    {
         print_usage(argv[0]);
         exit(1);
     }
-    
+
     config.filename = argv[1];
-    
-    for (int i = 2; i < argc; i++) {
+
+    for (int i = 2; i < argc; i++)
+    {
         std::string arg = argv[i];
-        
-        if (arg == "--cities" && i + 1 < argc) {
+
+        if (arg == "--cities" && i + 1 < argc)
+        {
             config.num_cities = atoi(argv[++i]);
         }
-        else if (arg == "--threads" && i + 1 < argc) {
+        else if (arg == "--threads" && i + 1 < argc)
+        {
             config.num_threads = atoi(argv[++i]);
         }
-        else if (arg == "--cutoff" && i + 1 < argc) {
+        else if (arg == "--cutoff" && i + 1 < argc)
+        {
             config.cutoff = atoi(argv[++i]);
         }
-        else if (arg == "--no-cutoff") {
+        else if (arg == "--no-cutoff")
+        {
             config.use_cutoff = false;
         }
-        else if (arg == "--skip-direct") {
+        else if (arg == "--skip-direct")
+        {
             config.run_direct = false;
         }
-        else if (arg == "--skip-mutex") {
+        else if (arg == "--skip-mutex")
+        {
             config.run_mutex = false;
         }
-        else if (arg == "--skip-partitioned") {
+        else if (arg == "--skip-partitioned")
+        {
             config.run_partitioned = false;
         }
-        else if (arg == "--skip-worksteal") {
+        else if (arg == "--skip-worksteal")
+        {
             config.run_worksteal = false;
         }
-        else if (arg == "--skip-mutex_fact") {
+        else if (arg == "--skip-mutex_fact")
+        {
             config.run_mutex_factorial = false;
         }
-        else {
+        else
+        {
             std::cerr << "Unknown option: " << arg << "\n";
             print_usage(argv[0]);
             exit(1);
         }
     }
-    
+
     return config;
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv)
+{
     Config config = parse_args(argc, argv);
-    
+
     // Load graph
     TSPGraph graph(config.filename);
-    if (config.num_cities > 0) {
+    if (config.num_cities > 0)
+    {
         graph.resize(config.num_cities);
     }
-    
+
     TSPPath::setup(&graph);
-    
+
     // Determine number of threads
-    int num_threads = config.num_threads > 0 
-                     ? config.num_threads 
-                     : std::thread::hardware_concurrency();
-    
-    
+    int num_threads = config.num_threads > 0
+                          ? config.num_threads
+                          : std::thread::hardware_concurrency();
+
     // Run direct (single-threaded)
-    if (config.run_direct) {
+    if (config.run_direct)
+    {
         std::cout << "Running direct (single-threaded)..." << std::endl;
         TSPTask tsp1;
         DirectTaskRunner r1;
         r1.run(&tsp1);
         std::cout << "direct: " << tsp1.result() << " t:" << r1.duration() << std::endl;
     }
-    
+
     // Run mutex-based parallel
-    if (config.run_mutex) {
+    if (config.run_mutex)
+    {
         std::cout << "Running mutex-based parallel..." << std::endl;
         TSPTask tsp2;
-        if (config.use_cutoff) {
+        if (config.use_cutoff)
+        {
             tsp2.cutoff(config.cutoff);
-        } else {
+        }
+        else
+        {
             tsp2.cutoff(1);
         }
-        
-        MutexTaskRunner r2(num_threads, TSPPath::MAX_GRAPH);
+
+        MutexTaskRunner r2(num_threads);
 
         r2.run(&tsp2);
         std::cout << "mutex: " << tsp2.result() << " t:" << r2.duration() << std::endl;
     }
 
-    if (config.run_mutex_factorial) {
+    if (config.run_mutex_factorial)
+    {
         std::cout << "Running mutex-based factorial parallel..." << std::endl;
         TSPTask tspFactorial;
-        if (config.use_cutoff) {
+        if (config.use_cutoff)
+        {
             tspFactorial.cutoff(config.cutoff);
-        } else {
+        }
+        else
+        {
             tspFactorial.cutoff(1);
         }
-        
-        StackTaskRunner rFactorial(num_threads, TSPPath::MAX_GRAPH);
+
+        StackTaskRunner rFactorial(num_threads);
         rFactorial.run(&tspFactorial);
         std::cout << "mutex_factorial: " << tspFactorial.result() << " t:" << rFactorial.duration() << std::endl;
     }
-    
+
     // Run work-stealing parallel
-    if (config.run_worksteal) {
+    if (config.run_worksteal)
+    {
         std::cout << "Running work-stealing parallel..." << std::endl;
         TSPTask tsp3;
-        if (config.use_cutoff) {
+        if (config.use_cutoff)
+        {
             tsp3.cutoff(config.cutoff);
         }
-        
+
         WorkStealingRunner r3(num_threads, TSPPath::MAX_GRAPH);
         r3.run(&tsp3);
         std::cout << "worksteal: " << tsp3.result() << " t:" << r3.duration() << std::endl;
-    } 
-
+    }
 
     // Run work-stealing parallel
     /* if (config.run_partitioned) {
@@ -174,11 +200,11 @@ int main(int argc, char** argv) {
         if (config.use_cutoff) {
             tsp4.cutoff(config.cutoff);
         }
-        
+
         PartitionedTaskStackRunner r4(TSPPath::MAX_GRAPH);
         r4.run(&tsp4);
         std::cout << "partitioned task: " << tsp4.result() << " t:" << r4.duration() << std::endl;
     } */
-    
+
     return 0;
 }

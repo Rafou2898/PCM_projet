@@ -17,7 +17,7 @@ private:
     int nb_threads;
 
 public:
-    StackTaskRunner(int n, int number_cities) : nb_threads(n)
+    StackTaskRunner(int n) : nb_threads(n)
     {
     }
 
@@ -58,10 +58,8 @@ private:
     }
     void worker_loop()
     {
-        // std::cout << "leaves_remaining: " << leaves_remaining.load() << std::endl;
         while (leaves_remaining.load() > 0)
         {
-            // std::cout << "leaves_remaining: " << leaves_remaining.load() << std::endl;
             Task *t = nullptr;
             {
                 lock_guard<mutex> lock(global_mutex);
@@ -83,7 +81,6 @@ private:
                 int n = t->split(&children);
 
                 int remaining = static_cast<TSPTask *>(t)->remaining();
-                // std::cout << "leaves_remaining: " << leaves_remaining.load() << std::endl;
 
                 if (n == 0)
                 {
@@ -110,6 +107,5 @@ private:
                 }
             }
         }
-        //std::cout << "leaves_remaining: " << leaves_remaining.load() << std::endl;
     }
 };

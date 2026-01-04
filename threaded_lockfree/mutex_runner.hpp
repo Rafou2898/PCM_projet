@@ -18,7 +18,7 @@ private:
     int nb_threads;
 
 public:
-    MutexTaskRunner(int n, int number_cities) : nb_threads(n), finished(false), active_tasks(0)
+    MutexTaskRunner(int n) : finished(false), active_tasks(0), nb_threads(n)
     {}
 
     void run(Task *root) override
