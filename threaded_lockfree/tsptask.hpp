@@ -201,6 +201,10 @@ public:
 	int remaining(){
 		return TSPPath::full() - _path.size();
 	}
+	
+	void recycle(){
+		reusefree(this);
+	}
 
 	// cutoff set, expressed as a distance from full path
 	void cutoff(int c) { _cutoff_size = TSPPath::full() - c; }

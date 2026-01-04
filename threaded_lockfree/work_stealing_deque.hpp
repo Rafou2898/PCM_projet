@@ -148,6 +148,7 @@ public:
         int64_t bottom = _bottom.load(memory_order_acquire);
 
         T *item = nullptr;
+        // Non-empty queue
         if (top < bottom)
         {
             CircularBuffer *array = _array.load(memory_order_acquire);
