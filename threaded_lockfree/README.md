@@ -1,5 +1,5 @@
 # Script do-it
-Le script do-it est juste le Makefile qui permet de compiler et d'exécuter les benchmarks.
+Le script do-it lance la commande `make test` qui permet de compiler et d'exécuter les benchmarks.
 
 ## Compilation
 Pour compiler le projet, utilisez la commande suivante:
@@ -13,10 +13,18 @@ make
 ### Commandes Makefile
 
 #### Compilation et exécution complète
+
+Ces commande compile le projet et exécute la suite complète de benchmarks.
+
+```bash
+./do-it.sh
+```
+ou juste:
+
 ```bash
 make test
 ```
-Cette commande compile le projet et exécute la suite complète de benchmarks.
+Conseil: Il est recommandé de lancer le benchmark complet sur la machine Xeon phi pour ne pas avoir de soucis de ressources.
 
 #### Benchmarks individuels
 ```bash
@@ -83,3 +91,6 @@ Lorsque vous exécutez `make test` ou `make bench-full`, les tests suivants sont
 - **Scalabilité des villes**: Test sur 2 à 17 villes, avec 60 threads et un cutoff de 8
 - **Cutoff**: Test sur 15 villes, avec 60 threads, et des valeurs de cutoff allant de 1 à 13
 - **Threads**: Test sur 15 villes, avec un cutoff de 8, et un nombre de threads allant de 1 à 256 (pas de 10)
+
+## Résultats
+Les résultats des benchmarks sont enregistrés dans le dossier `benchmark` sous forme de fichiers JSON `benchmark_complete.json`. A chaque nouvelle exécution, le fichier est mis à jour avec les nouveaux résultats.
