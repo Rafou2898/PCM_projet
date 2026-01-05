@@ -88,9 +88,9 @@ python3 benchmark_complete.py --threads 128 --cutoff 10 --runs 10
 
 Lorsque vous exécutez `make test` ou `make bench-full`, les tests suivants sont effectués :
 
-- **Scalabilité des villes**: Test sur 2 à 17 villes, avec 60 threads et un cutoff de 8
-- **Cutoff**: Test sur 15 villes, avec 60 threads, et des valeurs de cutoff allant de 1 à 13
-- **Threads**: Test sur 15 villes, avec un cutoff de 8, et un nombre de threads allant de 1 à 256 (pas de 10)
+- **Scalabilité des villes**: Test sur 2 à 16 villes, avec 60 threads et un cutoff de 8
+- **Cutoff**: Test sur 14 villes, avec 60 threads, et des valeurs de cutoff allant de 1 à 13
+- **Threads**: Test sur 15 villes, avec un cutoff de 8, et un nombre de threads allant de 1 à 256 (pas de 10). Pour 1 thread, la méthode direct est inclue mais pas pour les autres nombres de threads.
 
 ## Résultats
 Les résultats des benchmarks sont enregistrés dans le dossier `benchmark` sous forme de fichiers JSON `benchmark_complete.json`. A chaque nouvelle exécution, le fichier est mis à jour avec les nouveaux résultats.

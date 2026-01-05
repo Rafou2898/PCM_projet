@@ -111,7 +111,7 @@ class CompleteBenchmark:
         print("="*80)
         
         if cities_range is None:
-            cities_range = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]
+            cities_range = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
         
         results = {}
         skip_methods = skip_methods or {}
@@ -147,7 +147,7 @@ class CompleteBenchmark:
             cities = 14
         
         if cutoff_values is None:
-            cutoff_values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+            cutoff_values = [1,2,3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
         
         results = {}
         skip_methods = skip_methods or {}
@@ -161,7 +161,7 @@ class CompleteBenchmark:
         for cutoff in cutoff_values:
             print(f"Testing cutoff={cutoff}...", end=" ", flush=True)
             stats = self.run_test(tsp_file, cities=cities, threads=self.default_threads, 
-                                cutoff=cutoff, **skip_methods)
+                                cutoff=cutoff, skip_direct=True, skip_mutex=True, skip_mutex_factorial=True, **skip_methods)
             
             if stats:
                 results[f'cutoff_{cutoff}'] = stats
@@ -377,7 +377,7 @@ def main():
     
     if args.test in ['cutoff', 'all']:
         cutoff_values = parse_range(args.cutoff_values) if args.cutoff_values else None
-        cities = args.cities if args.cities else 15
+        cities = args.cities if args.cities else 14
         benchmark.test_cutoff_impact(cities=cities, cutoff_values=cutoff_values, 
                                      skip_methods=skip_methods)
     
